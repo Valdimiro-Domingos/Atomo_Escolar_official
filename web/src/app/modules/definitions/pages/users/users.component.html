@@ -1,0 +1,159 @@
+<div class="content bg-[#F0F2F3] h-screen">
+  <app-breadcrumb [icon]="'pi pi-cog'" [urlBase]="'Definições'" [urlMiddle]="'Gestão de Utilizadores'" [url]="base"></app-breadcrumb>
+<div class="w-full mb-3 mt-3 flex flex-1 justify-end">
+  <app-form-modal (onClick)="patchValues(null)" [title]="'Adicionar Utilizador'">
+    <form (ngSubmit)="onSave()" [formGroup]="formulario" class="py-3 px-3 space-y-3 w-[90vw] xl:w-[40vw]">
+      <div class="form-group">
+        <label for="exampleInputName"  class="text-sm text-gray-700 mb-1">Nome</label>
+        <input  id="name" formControlName="name" type="text" class="form-control">
+        <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+          O nome é obrigatório
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Email</label>
+        <input  id="email" formControlName="email" type="email" class="form-control">
+        <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('email')?.errors  && formulario.get('email')?.touched">
+          O Email é obrigatório
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Cargo</label>
+        <select id="role_id" formControlName="role_id" class="form-control">
+          <option value="" selected>Selecione o Cargo</option>
+          <option *ngFor="let item of roleDatas.roles" [value]="item.id">{{ item.role }}</option>
+        </select>
+        <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('role_id')?.errors  && formulario.get('role_id')?.touched">
+          O Cargo é obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Departamento</label>
+        <select id="departament_id" formControlName="departament_id" class="form-control">
+          <option value="" selected>Selecione o Departamento</option>
+          <option *ngFor="let item of departamentDatas.departaments" [value]="item.id">{{ item.designation }}</option>
+        </select>
+        <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('departament_id')?.errors  && formulario.get('departament_id')?.touched">
+          O Departamento é obrigatório
+        </div>
+      </div>
+
+      <div class="w-full flex justify-end items-end">
+        <button type="submit" class="p-2 px-4 rounded-[10px]  bg-primary-btn  text-white">Salvar</button>
+      </div>
+    </form>
+  </app-form-modal>
+</div>
+
+
+<div class="row">
+<div class="col-md-12">
+  <div class="card shadow-none rounded-md border">
+      <div class="card-body">
+        <app-table [title]="'Utilizadores'" [heading]="[ 'Nome', 'Email', 'Departamento', 'Cargo', 'Opções']" [items]="datas.users">
+          <ng-template let-item #renderItem>
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.departament.designation }}</td>
+            <td>{{ item.role.role }}</td>
+            <td class="flex items-center gap-1 h-20">
+              <div class="" title="Altetar senha"><svg (click)="(isPass = true); formPass.controls['id'].setValue(item?.id)" width="20px" class="cursor-pointer"  class="cursor-pointer" height="20px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#586A84"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Layer_2" data-name="Layer 2"> <g id="invisible_box" data-name="invisible box"> <rect width="48" height="48" fill="none"></rect> </g> <g id="Layer_7" data-name="Layer 7"> <g> <path d="M3,30.5l-1,.6V39a2,2,0,0,0,2,2H24V28.3A24.4,24.4,0,0,0,16,27,25.6,25.6,0,0,0,3,30.5Z"></path> <path d="M16,5a9,9,0,1,0,9,9A9,9,0,0,0,16,5Z"></path> <path d="M44,28H43V25a6,6,0,0,0-12,0v3H30a2,2,0,0,0-2,2V41a2,2,0,0,0,2,2H44a2,2,0,0,0,2-2V30A2,2,0,0,0,44,28Zm-9-3a2,2,0,0,1,4,0v3H35Z"></path> </g> </g> </g> </g></svg></div>
+              <app-form-modal (onClick)="patchValues(item)" title="Editar Utilizador" [isEdit]="true">
+                <form (ngSubmit)="onUpdate(item)" [formGroup]="formulario" class="py-3 px-3 space-y-3">
+                  <div class="form-group">
+                    <label for="exampleInputName"  class="text-sm text-gray-700 mb-1">Nome</label>
+                    <input  id="name" formControlName="name" type="text" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                      O nome é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Email</label>
+                    <input  id="email" formControlName="email" type="email" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('email')?.errors  && formulario.get('email')?.touched">
+                      O Email é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Cargo</label>
+                    <select id="role_id" formControlName="role_id" class="form-control">
+                      <option value="" selected>Selecione o Cargo</option>
+                      <option *ngFor="let item of roleDatas.roles" [value]="item.id">{{ item.role }}</option>
+                    </select>
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('role_id')?.errors  && formulario.get('role_id')?.touched">
+                      O Cargo é obrigatório
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Departamento</label>
+                    <select id="departament_id" formControlName="departament_id" class="form-control">
+                      <option value="" selected>Selecione o Departamento</option>
+                      <option *ngFor="let item of departamentDatas.departaments" [value]="item.id">{{ item.designation }}</option>
+                    </select>
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('departament_id')?.errors  && formulario.get('departament_id')?.touched">
+                      O Departamento é obrigatório
+                    </div>
+                  </div>
+
+                  <div class="w-full flex justify-end items-end">
+                    <button type="submit" class="p-2 px-4 rounded-[10px]  bg-primary-btn  text-white">Salvar</button>
+                  </div>
+                </form>
+              </app-form-modal>
+              <div title="Redifinir senha padrão"><svg class="cursor-pointer" (click)="resetPass(item?.id)" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 8.00169L16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V8.00169M16 8.00169C15.7563 8 15.4907 8 15.2 8H8.8C8.50929 8 8.24373 8 8 8.00169M16 8.00169C17.1649 8.00979 17.8313 8.05658 18.362 8.32698C18.9265 8.6146 19.3854 9.07354 19.673 9.63803C20 10.2798 20 11.1198 20 12.8V16.2C20 17.8802 20 18.7202 19.673 19.362C19.3854 19.9265 18.9265 20.3854 18.362 20.673C17.7202 21 16.8802 21 15.2 21H8.8C7.11984 21 6.27976 21 5.63803 20.673C5.07354 20.3854 4.6146 19.9265 4.32698 19.362C4 18.7202 4 17.8802 4 16.2V12.8C4 11.1198 4 10.2798 4.32698 9.63803C4.6146 9.07354 5.07354 8.6146 5.63803 8.32698C6.16873 8.05658 6.83507 8.00979 8 8.00169M10 11V18M14 11V18M8.5 12.5H15.5M8.5 16.5H15.5" stroke="#586A84" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></div>
+              
+              <app-form-modal-remove (handleRemove)="handleRemove(item.id)" [item]="item" title="Eliminar" [name]="item.name"></app-form-modal-remove>
+            </td>
+          </ng-template>
+        </app-table>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+<app-footer></app-footer>
+
+
+<app-form-modal-uplode *ngIf="isPass" (onClick)="fechar()" [lockClose]="true" title="Alteração de credencial" [full]="true">
+  <form [formGroup]="formPass" (ngSubmit)="UpdatePass()" class="py-3 px-3 w-[90vw] xl:w-[60vw] space-y-3">
+    <div class="form-group">
+      <label for="exampleInputName"  class="text-sm text-gray-700 mb-1">Senha Atual</label>
+      <br>
+      <!-- <input  id="pass_old" type="text"> -->
+      <p-password formControlName="pass" [toggleMask]="true" promptLabel=" " weakLabel=" " mediumLabel="Complexidade Média" strongLabel=" "></p-password>
+
+      <div class="text-red-500 mt-1 text-xs" *ngIf="formPass.get('pass')?.errors  && formPass.get('pass')?.touched">
+        Senha atual é obrigatória
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputName"  class="text-sm text-gray-700 mb-1">Nova Senha</label>
+      <p-password formControlName="pass_new" [toggleMask]="true" promptLabel="Senha" weakLabel="Senha Fraca" mediumLabel="Complexidade Média" strongLabel="Senha Forte"></p-password>
+      <div class="text-red-500 mt-1 text-xs" *ngIf="formPass.get('pass_new')?.errors  && formPass.get('pass_new')?.touched">
+        Senha nova é obrigatória
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="exampleInputName"  class="text-sm text-gray-700 mb-1">Confirma Senha</label>
+      <!-- <input  id="name" formControlName="pass_new_confirmation" type="text" class="form-control"> -->
+      <p-password formControlName="pass_new_confirmation" [toggleMask]="true" promptLabel="Senha" weakLabel="Senha Fraca" mediumLabel="Complexidade Média" strongLabel="Senha Forte"></p-password>
+      <div class="text-red-500 mt-1 text-xs" *ngIf="formPass.get('pass_new_confirmation')?.errors  && formPass.get('pass_new_confirmation')?.touched">
+        Senha de confirmação é obrigatório
+      </div>
+
+      <div class="text-red-500 mt-1 text-xs" *ngIf="(formPass.controls['pass_new_confirmation']?.value != formPass.controls['pass_new']?.value) && formPass.get('pass_new_confirmation')?.touched">
+        Senha é diferente
+      </div>
+    </div>
+
+    <div class="w-full flex justify-end items-end">
+      <button class="bg-save p-2 text-white" type="submit">Salvar</button>
+    </div>
+  </form>
+</app-form-modal-uplode>
+

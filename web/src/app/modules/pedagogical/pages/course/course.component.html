@@ -1,0 +1,68 @@
+<app-pre-load *ngIf="isLoading"></app-pre-load>
+
+<div class="content bg-[#F0F2F3] h-screen">
+  <app-breadcrumb [icon]="'pi pi-id-card'" [urlBase]="'Area Pedagógica'" [url]="base"></app-breadcrumb>
+<div class="w-full mb-3 mt-3 flex flex-1 justify-end">
+  <app-form-modal (onClick)="patchValues({designation: '', description: ''})" [title]="'Adicionar Curso'">
+    <form (ngSubmit)="onSave()" [formGroup]="formulario" class="py-3 px-3 w-[90vw] xl:w-[60vw] space-y-3">
+      <div class="form-group">
+        <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Designação</label>
+        <input  id="designation" formControlName="designation" type="text" class="form-control">
+        <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('designation')?.errors  && formulario.get('designation')?.touched">
+          O nome é obrigatório
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Descrição</label>
+        <textarea  id="description" formControlName="description" class="form-control" rows="3"></textarea>
+        <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('description')?.errors  && formulario.get('description')?.touched">
+          A Descrição é obrigatória
+        </div>
+      </div>
+      <div class="w-full flex justify-end items-end">
+        <button type="submit" class="p-2 px-4 rounded-[10px]  bg-primary-btn  text-white">Salvar</button>
+      </div>
+    </form>
+  </app-form-modal>
+</div>
+<div class="row">
+<div class="col-md-12">
+  <div class="card shadow-none rounded-md border">
+      <div class="card-body">
+        <app-table [title]="'Cursos'" [heading]="['id', 'Curso', 'Descrição', 'Opções']" [items]="datas.courses">
+          <ng-template let-item #renderItem>
+            <td>{{ datas.courses | findIndex: item }}</td>
+            <td>{{ item.designation }}</td>
+            <td>{{ item.description }}</td>
+            <td class="flex items-center gap-1 h-20">
+              <app-form-modal (onClick)="patchValues({designation: item.designation, description: item.description})" title="Editar Curso" [isEdit]="true">
+                <form (ngSubmit)="onUpdate(item)" [formGroup]="formulario" class="py-3 w-[90vw] xl:w-[60vw] px-3 space-y-3">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Nome</label>
+                    <input id="designation" formControlName="designation" type="text" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('designation')?.errors  && formulario.get('designation')?.touched">
+                      O nome é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Descrição</label>
+                    <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('description')?.errors  && formulario.get('description')?.touched">
+                      A Descrição é obrigatória
+                    </div>
+                  </div>
+                  <div class="w-full flex justify-end items-end">
+                    <button type="submit" class="p-2 px-4 rounded-[10px]  bg-primary-btn  text-white">Salvar</button>
+                  </div>
+                </form>
+              </app-form-modal>
+              <app-form-modal-remove (handleRemove)="handleRemove(item.id)" [item]="item" title="Eliminar" [name]="item.designation"></app-form-modal-remove>
+            </td>
+          </ng-template>
+        </app-table>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+<app-footer></app-footer>

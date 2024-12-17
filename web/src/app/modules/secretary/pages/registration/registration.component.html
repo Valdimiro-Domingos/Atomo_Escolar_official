@@ -1,0 +1,786 @@
+<app-pre-load *ngIf="isLoading"></app-pre-load>
+
+<div class="content h-screen bg-[#F0F2F3]">
+  <app-breadcrumb [icon]="'pi pi-briefcase'" [urlBase]="'Secretaria'" [url]="base"></app-breadcrumb>
+  <div class="w-full mb-3 mt-4 flex flex-1 gap-2 justify-between items-center">
+  
+    <div (click)="openSearchPage()" class="relative h-9 flex items-center justify-center cursor-pointer w-10 rounded-md bg-white">
+      <i class="pi pi-search"></i>
+    </div>
+    
+    <div class="flex gap-2">
+      <app-form-modal [name]="'Matrícula'" (onClick)="patchValues(null)" [title]="'Nova Matrícula'">
+        <form (ngSubmit)="onSave()" [formGroup]="formulario"
+          class="py-3 px-3 w-[90vw] max-h-[30rem] overflow-y-scroll xl:w-[60vw] space-y-3">
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome (*)</label>
+              <input id="name" formControlName="name" type="text" class="form-control">
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                O nome é obrigatório
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nº de Processo</label>
+              <input id="name" formControlName="enrollment_number" type="text" class="form-control">
+              <!-- <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('enrollment_number')?.errors  && formulario.get('enrollment_number')?.touched">
+                Este campo é obrigatório
+              </div> -->
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Gênero</label>
+              <select id="gender" formControlName="gender" class="form-control">
+                <option value="" selected disabled>Selecione o gênero</option>
+                <option value="M" selected>M</option>
+                <option value="F" selected>F</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('gender')?.errors  && formulario.get('gender')?.touched">
+                O Gênero é obrigatório
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="mb-3">
+                <label for="formFile" class="form-label text-gray-700">Foto</label>
+                <input class="form-control" formControlName="photo" (change)="onFileChange($event)" accept="image/*"
+                  type="file">
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Identificação (*)</label>
+              <input id="identity" formControlName="identity" type="type" class="form-control">
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('identity')?.errors  && formulario.get('identity')?.touched">
+                Este campo é obrigatório
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Curso</label>
+              <select id="course_id" formControlName="course_id" class="form-control">
+                <option value="" selected  disabled>Selecione o Curso</option>
+                <option *ngFor="let item of baseResponse.items?.courses" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('course_id')?.errors  && formulario.get('course_id')?.touched">
+                O Curso é obrigatório
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Período (*)</label>
+              <select id="period_id" formControlName="period_id" class="form-control">
+                <option value="" selected  disabled>Selecione o periodo</option>
+                <option *ngFor="let item of baseResponse.items?.periods" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('period_id')?.errors  && formulario.get('period_id')?.touched">
+                O Período é obrigatório
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Ano Lectivo  (*)</label>
+              <select id="school_year_id" formControlName="school_year_id" class="form-control">
+                <option value="" selected disabled>Selecione o Ano Lectivo</option>
+                <option *ngFor="let item of baseResponse.items.school_year" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('school_year_id')?.errors  && formulario.get('school_year_id')?.touched">
+                O ano lectivo é obrigatório
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Classe  (*)</label>
+              <select id="classe_id" formControlName="classe_id" class="form-control">
+                <option value="" selected  disabled>Selecione a Classe</option>
+                <option *ngFor="let item of baseResponse.items.classes" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('classe_id')?.errors  && formulario.get('classe_id')?.touched">
+                A classe é obrigatória
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Turma  (*)</label>
+              <select id="turma_id" formControlName="turma_id" class="form-control">
+                <option value="" selected  disabled>Selecione a Turma</option>
+                <option *ngFor="let item of baseResponse.items.turmas" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('turma_id')?.errors  && formulario.get('turma_id')?.touched">
+                A Turma é obrigatória
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Sala (*)</label>
+              <select id="class_room_id" formControlName="class_room_id" class="form-control">
+                <option value="" selected disabled>Selecione a Sala</option>
+                <option *ngFor="let item of baseResponse.items.classrooms" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('class_room_id')?.errors  && formulario.get('class_room_id')?.touched">
+                A Sala é obrigatória
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome do Pai (*)</label>
+              <input id="name" formControlName="father_name" type="text" class="form-control">
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                O nome é obrigatório
+              </div>
+            </div>
+  
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+              <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome da Mãe (*)</label>
+              <input id="name" formControlName="mother_name" type="text" class="form-control">
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                O nome é obrigatório
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Endereço (*)</label>
+              <input id="name" formControlName="address" type="text" class="form-control">
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('address')?.errors  && formulario.get('address')?.touched">
+                Este campo é obrigatório
+              </div>
+            </div>
+          </div>
+  
+          <div class="w-full flex justify-end items-end">
+            <button type="submit" class="px-3 py-2 bg-primary-btn  text-white">Salvar</button>
+          </div>
+        </form>
+      </app-form-modal>
+  
+      <app-form-modal [name]="'Confirmação'" (onClick)="patchValues(null); identity = ''; enrollment_number = ''"
+        [title]="'Nova Confirmação'">
+        <form (ngSubmit)="onReconfirm()" [formGroup]="formularioReconfirm"
+          class="py-3 px-3 w-[90vw]  max-h-[30rem] overflow-y-scroll xl:w-[60vw] space-y-3">
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Matrícula</label>
+            <select (change)="patchValuesReconfirm($event)" id="enrollment_id" formControlName="enrollment_id"
+              class="form-control">
+              <option value="" selected [disabled]="true">Selecione o nome do estudante</option>
+              <option *ngFor="let item of baseResponse.enrollment" [value]="item.id">{{ item.student.name }}</option>
+            </select> 
+          
+  
+            <div class="text-red-500 mt-1 text-xs"
+              *ngIf="formularioReconfirm.get('enrollment_id')?.errors  && formularioReconfirm.get('enrollment_id')?.touched">
+              O nome do estudante é obrigatório
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nº de Processo</label>
+              <input id="name" disabled [value]="enrollment_number" type="text" class="form-control">
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formularioReconfirm.get('enrollment_number')?.errors  && formularioReconfirm.get('enrollment_number')?.touched">
+                Este campo é obrigatório
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Gênero</label>
+              <select id="gender" formControlName="gender" class="form-control">
+                <option value="" selected [disabled]="true">Selecione o gênero</option>
+                <option value="M" selected>M</option>
+                <option value="F" selected>F</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formularioReconfirm.get('gender')?.errors  && formularioReconfirm.get('gender')?.touched">
+                O Gênero é obrigatório
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Identificação</label>
+              <input id="identity" [value]="identity" disabled type="type" class="form-control">
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formularioReconfirm.get('identity')?.errors  && formularioReconfirm.get('identity')?.touched">
+                Este campo é obrigatório
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Curso</label>
+              <select id="course_id" formControlName="course_id" class="form-control">
+                <option value="" selected  [disabled]="true">Selecione o Curso</option>
+                <option *ngFor="let item of baseResponse.items.courses" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formularioReconfirm.get('course_id')?.errors  && formularioReconfirm.get('course_id')?.touched">
+                O Curso é obrigatório
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Período (*)</label>
+              <select id="period_id" formControlName="period_id" class="form-control">
+                <option value="" selected  [disabled]="true">Selecione o periodo</option>
+                <option *ngFor="let item of baseResponse.items.periods" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formularioReconfirm.get('period_id')?.errors  && formularioReconfirm.get('period_id')?.touched">
+                O Período é obrigatório
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Ano Lectivo  (*)</label>
+              <select id="school_year_id" formControlName="school_year_id" class="form-control">
+                <option value="" selected  [disabled]="true">Selecione o Ano Lectivo</option>
+                <option *ngFor="let item of baseResponse.items.school_year" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formularioReconfirm.get('school_year_id')?.errors  && formularioReconfirm.get('school_year_id')?.touched">
+                O ano lectivo é obrigatório
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Classe (*)</label>
+              <select id="classe_id" formControlName="classe_id" class="form-control">
+                <option value="" selected  [disabled]="true">Selecione a Classe</option>
+                <option *ngFor="let item of baseResponse.items.classes" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formularioReconfirm.get('classe_id')?.errors  && formularioReconfirm.get('classe_id')?.touched">
+                A classe é obrigatória
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Turma (*)</label>
+              <select id="turma_id" formControlName="turma_id" class="form-control">
+                <option value="" selected  [disabled]="true">Selecione a Turma</option>
+                <option *ngFor="let item of baseResponse.items.turmas" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formularioReconfirm.get('turma_id')?.errors  && formularioReconfirm.get('turma_id')?.touched">
+                A Turma é obrigatória
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome do Pai</label>
+              <input id="name" formControlName="father_name" type="text" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Sala  (*)</label>
+              <select id="class_room_id" formControlName="class_room_id" class="form-control">
+                <option value="" selected  [disabled]="true">Selecione a Sala</option>
+                <option *ngFor="let item of baseResponse.items.classrooms" [value]="item.id">{{ item.designation }}</option>
+              </select>
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('class_room_id')?.errors  && formulario.get('class_room_id')?.touched">
+                A Sala é obrigatória
+              </div>
+            </div>
+          </div>
+  
+  
+            <div class="grid grid-cols-2 gap-2">
+              <div class="form-group">
+                <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome da Mãe</label>
+                <input id="name" formControlName="mother_name" type="text" class="form-control">
+                
+              </div>
+              
+              
+             <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Endereço</label>
+              <input id="name" formControlName="address" type="text" class="form-control">
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('address')?.errors  && formulario.get('address')?.touched">
+                Este campo é obrigatório
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex justify-end items-end">
+            <button type="submit" class="p-2 px-4 rounded-[10px]  bg-primary-btn  text-white">Salvar</button>
+          </div>
+        </form>
+      </app-form-modal>
+  
+      <app-form-modal [autoHeight]="false" [name]="'Relatorio'" (onClick)="patchValues(null)" [title]="'Relatorio'">
+        <form (ngSubmit)="exportDocumento()" [formGroup]="documentalType"
+        class="px-3 py-4  w-[90vw] xl:w-[60vw]">
+    
+        
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-2">
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Documento (*)</label>
+            <select id="documento" formControlName="documento" class="form-control">
+              <option value="" selected  disabled>Selecione o documento</option>
+              <option value="matricula" >Matricula</option>
+              <option value="confirmacao">Confirmação</option>
+            </select>
+            <div class="text-red-500 mt-1 text-xs"
+              *ngIf="formulario.get('documento')?.errors  && formulario.get('documento')?.touched">
+              O documento é obrigatório
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">De  (*)</label>
+            <input id="date_inssure" formControlName="date_issure" type="date" class="form-control">
+          </div>
+  
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Para  (*)</label>
+            <input id="date_end" formControlName="date_end" type="date" class="form-control">
+          </div>
+        </div>
+        
+        <div class="w-full flex justify-end items-end mt-3">
+          <button type="submit" class="px-5 py-2 bg-primary-btn  text-white">Salvar</button>
+        </div>
+      </form>
+      </app-form-modal>
+    </div>
+  </div>
+  
+  
+  <div class="row">
+    <div class="col-md-12">
+      <p-table [value]="baseResponse.enrollment"  [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5, 10, 20]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th
+              *ngFor="let item of ['Nº Proc.', 'Nome', 'Identificação', 'Turma', 'Sala', 'Classe', 'Ano Lectivo', 'Período', 'Curso', 'Opções']">
+              {{item}}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{ item.enrollment_number }}</td>
+            <td>{{ item.student.name }}</td>
+            <td>{{ item.student.identity }}</td>
+            <td>{{ item.turma.designation }}</td>
+            <td>{{ item.class_room.designation }}</td>
+            <td>{{ item.classe.designation }}</td>
+            <td>{{ item.school_year.designation }}</td>
+            <td>{{ item.period.designation }}</td>
+            <td>{{ item.course.designation }}</td>
+            <td class="flex items-center gap-2 h-20">
+                    <!-- form edit -->
+              <app-form-modal (onClick)="patchValues(item)"  [custom]="false" [title]="'Editar Matrícula'"  [isEdit]="true">
+                  <form (ngSubmit)="onUpdate(item)" [formGroup]="formulario" class="py-3 px-3 w-[90vw] max-h-[30rem] overflow-y-scroll xl:w-[60vw] space-y-3">
+                      <div class="grid grid-cols-2 gap-2">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome (*)</label>
+                          <input id="name" formControlName="name" type="text" class="form-control">
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                            O nome é obrigatório
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nº de Processo</label>
+                          <input id="name" formControlName="enrollment_number" type="text" class="form-control">
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('enrollment_number')?.errors  && formulario.get('enrollment_number')?.touched">
+                            Este campo é obrigatório
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Gênero</label>
+                          <select id="gender" formControlName="gender" class="form-control">
+                            <option value="" selected disabled>Selecione o gênero</option>
+                            <option value="M" selected>M</option>
+                            <option value="F" selected>F</option>
+                          </select>
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('gender')?.errors  && formulario.get('gender')?.touched">
+                            O Gênero é obrigatório
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <div class="mb-3">
+                            <label for="formFile" class="form-label text-gray-700">Foto</label>
+                            <input class="form-control" formControlName="photo" (change)="onFileChange($event)" accept="image/*"
+                              type="file">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="grid grid-cols-2 gap-2">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Identificação (*)</label>
+                          <input id="identity" formControlName="identity" type="type" class="form-control">
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('identity')?.errors  && formulario.get('identity')?.touched">
+                            Este campo é obrigatório
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Curso</label>
+                          <select id="course_id" formControlName="course_id" class="form-control">
+                            <option value="" selected  disabled>Selecione o Curso</option>
+                            <option *ngFor="let item of baseResponse.items?.courses" [value]="item.id">{{ item.designation }}</option>
+                          </select>
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('course_id')?.errors  && formulario.get('course_id')?.touched">
+                            O Curso é obrigatório
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="grid grid-cols-2 gap-2">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Período (*)</label>
+                          <select id="period_id" formControlName="period_id" class="form-control">
+                            <option value="" selected  disabled>Selecione o periodo</option>
+                            <option *ngFor="let item of baseResponse.items?.periods" [value]="item.id">{{ item.designation }}</option>
+                          </select>
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('period_id')?.errors  && formulario.get('period_id')?.touched">
+                            O Período é obrigatório
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Ano Lectivo  (*)</label>
+                          <select id="school_year_id" formControlName="school_year_id" class="form-control">
+                            <option value="" selected disabled>Selecione o Ano Lectivo</option>
+                            <option *ngFor="let item of baseResponse.items.school_year" [value]="item.id">{{ item.designation }}</option>
+                          </select>
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('school_year_id')?.errors  && formulario.get('school_year_id')?.touched">
+                            O ano lectivo é obrigatório
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="grid grid-cols-2 gap-2">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Classe  (*)</label>
+                          <select id="classe_id" formControlName="classe_id" class="form-control">
+                            <option value="" selected  disabled>Selecione a Classe</option>
+                            <option *ngFor="let item of baseResponse.items.classes" [value]="item.id">{{ item.designation }}</option>
+                          </select>
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('classe_id')?.errors  && formulario.get('classe_id')?.touched">
+                            A classe é obrigatória
+                          </div>
+                        </div>
+                        
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Turma  (*)</label>
+                          <select id="turma_id" formControlName="turma_id" class="form-control">
+                            <option value="" selected  disabled>Selecione a Turma</option>
+                            <option *ngFor="let item of baseResponse.items.turmas" [value]="item.id">{{ item.designation }}</option>
+                          </select>
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('turma_id')?.errors  && formulario.get('turma_id')?.touched">
+                            A Turma é obrigatória
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Sala (*)</label>
+                          <select id="class_room_id" formControlName="class_room_id" class="form-control">
+                            <option value="" selected disabled>Selecione a Sala</option>
+                            <option *ngFor="let item of baseResponse.items.classrooms" [value]="item.id">{{ item.designation }}</option>
+                          </select>
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('class_room_id')?.errors  && formulario.get('class_room_id')?.touched">
+                            A Sala é obrigatória
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome do Pai (*)</label>
+                          <input id="name" formControlName="father_name" type="text" class="form-control">
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                            O nome é obrigatório
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                      <div class="grid grid-cols-2 gap-2">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome da Mãe (*)</label>
+                          <input id="name" formControlName="mother_name" type="text" class="form-control">
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                            O nome é obrigatório
+                        </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Endereço (*)</label>
+                          <input id="name" formControlName="address" type="text" class="form-control">
+                          <div class="text-red-500 mt-1 text-xs"
+                            *ngIf="formulario.get('address')?.errors  && formulario.get('address')?.touched">
+                            Este campo é obrigatório
+                          </div>
+                        </div>
+                      </div>
+                     <div class="w-full flex justify-end items-end">
+                        <button type="submit" class="px-3 py-2 bg-primary-btn  text-white">Salvar</button>
+                      </div>
+                  </form>
+                </app-form-modal>
+              
+              <app-form-modal-remove [icone]="'async'" (observation)="handleRemove(item.id, $event)" [item]="item" title="Tornar desistente"
+                [name]="item.student.name"></app-form-modal-remove>
+              <a [href]="printPDF(item)" target="_blank" download rel="noopener noreferrer">
+              <button class="px-1 text-gray-700 py-1 cursor-pointer rounded-sm flex items-center gap-1">
+                  <i class="pi pi-print"></i>
+                </button>
+              </a>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+          <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+      </p-table>
+    </div>
+
+  </div>
+</div>
+<app-footer></app-footer>
+
+<!-- modal search -->
+<ng-container *ngIf="searchPage">
+  <div class="w-full h-full flex justify-center items-center z-50 fixed left-0 inset-0 top-0">
+    <div (click)="removeSearchPage()" class="w-full h-full flex justify-center items-center bg-black/40 z-0 absolute inset-0 top-0"></div>
+    
+    <div class="flex flex-col w-6/12 bg-white p-4 z-50 h-3/5 rounded-md">
+      <div class="p-input-icon-right mx-auto w-5/12 overflow-hidden relative flex items-center border-[0.5px] h-10 rounded-lg px-2">
+        <i class="pi pi-search absolute"></i>
+        <input type="text" id="currentSearch" #currentSearch (input)="onSearch(currentSearch.value)" class="text-xs h-10 text-center w-full px-4 py-3"  placeholder="Nome ou Identidade">
+      </div>
+      
+      <div class="flex flex-col">
+        <table class="table mt-3">
+          <thead>
+            <tr>
+              <th *ngFor="let item of ['Nº Proc.', 'Nome', 'Identificação', 'Opções']">
+                  {{item}}
+                </th>
+            </tr>
+          </thead>
+        </table>
+        <div class="w-full p-5 py-2 h-[500px] overflow-y-auto">
+          <table class="table mt-2">
+            <tbody>
+            
+              <tr *ngFor="let item of filteredItems">
+                <td class="text-xs"> {{item.id }} </td>
+                <td class="text-xs">  {{item.student.name}} </td>
+                <td class="text-xs">
+                  {{item.student.identity}}
+                </td>
+                <td class="flex items-center gap-2 h-20">
+                      <!-- form edit -->
+                <app-form-modal (onClick)="patchValues(item)"  [custom]="false" [title]="'Editar Matrícula'"  [isEdit]="true">
+                    <form (ngSubmit)="onUpdate(item)" [formGroup]="formulario" class="py-3 px-3 w-[90vw] max-h-[30rem] overflow-y-scroll xl:w-[60vw] space-y-3">
+                        <div class="grid grid-cols-2 gap-2">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome (*)</label>
+                            <input id="name" formControlName="name" type="text" class="form-control">
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                              O nome é obrigatório
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nº de Processo</label>
+                            <input id="name" formControlName="enrollment_number" type="text" class="form-control">
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('enrollment_number')?.errors  && formulario.get('enrollment_number')?.touched">
+                              Este campo é obrigatório
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Gênero</label>
+                            <select id="gender" formControlName="gender" class="form-control">
+                              <option value="" selected disabled>Selecione o gênero</option>
+                              <option value="M" selected>M</option>
+                              <option value="F" selected>F</option>
+                            </select>
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('gender')?.errors  && formulario.get('gender')?.touched">
+                              O Gênero é obrigatório
+                            </div>
+                          </div>
+                          <div class="mb-3">
+                            <div class="mb-3">
+                              <label for="formFile" class="form-label text-gray-700">Foto</label>
+                              <input class="form-control" formControlName="photo" (change)="onFileChange($event)" accept="image/*"
+                                type="file">
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Identificação (*)</label>
+                            <input id="identity" formControlName="identity" type="type" class="form-control">
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('identity')?.errors  && formulario.get('identity')?.touched">
+                              Este campo é obrigatório
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Curso</label>
+                            <select id="course_id" formControlName="course_id" class="form-control">
+                              <option value="" selected  disabled>Selecione o Curso</option>
+                              <option *ngFor="let item of baseResponse.items?.courses" [value]="item.id">{{ item.designation }}</option>
+                            </select>
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('course_id')?.errors  && formulario.get('course_id')?.touched">
+                              O Curso é obrigatório
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Período (*)</label>
+                            <select id="period_id" formControlName="period_id" class="form-control">
+                              <option value="" selected  disabled>Selecione o periodo</option>
+                              <option *ngFor="let item of baseResponse.items?.periods" [value]="item.id">{{ item.designation }}</option>
+                            </select>
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('period_id')?.errors  && formulario.get('period_id')?.touched">
+                              O Período é obrigatório
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Ano Lectivo  (*)</label>
+                            <select id="school_year_id" formControlName="school_year_id" class="form-control">
+                              <option value="" selected disabled>Selecione o Ano Lectivo</option>
+                              <option *ngFor="let item of baseResponse.items.school_year" [value]="item.id">{{ item.designation }}</option>
+                            </select>
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('school_year_id')?.errors  && formulario.get('school_year_id')?.touched">
+                              O ano lectivo é obrigatório
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Classe  (*)</label>
+                            <select id="classe_id" formControlName="classe_id" class="form-control">
+                              <option value="" selected  disabled>Selecione a Classe</option>
+                              <option *ngFor="let item of baseResponse.items.classes" [value]="item.id">{{ item.designation }}</option>
+                            </select>
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('classe_id')?.errors  && formulario.get('classe_id')?.touched">
+                              A classe é obrigatória
+                            </div>
+                          </div>
+                          
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Turma  (*)</label>
+                            <select id="turma_id" formControlName="turma_id" class="form-control">
+                              <option value="" selected  disabled>Selecione a Turma</option>
+                              <option *ngFor="let item of baseResponse.items.turmas" [value]="item.id">{{ item.designation }}</option>
+                            </select>
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('turma_id')?.errors  && formulario.get('turma_id')?.touched">
+                              A Turma é obrigatória
+                            </div>
+                          </div>
+                
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Sala (*)</label>
+                            <select id="class_room_id" formControlName="class_room_id" class="form-control">
+                              <option value="" selected disabled>Selecione a Sala</option>
+                              <option *ngFor="let item of baseResponse.items.classrooms" [value]="item.id">{{ item.designation }}</option>
+                            </select>
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('class_room_id')?.errors  && formulario.get('class_room_id')?.touched">
+                              A Sala é obrigatória
+                            </div>
+                          </div>
+                
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome do Pai (*)</label>
+                            <input id="name" formControlName="father_name" type="text" class="form-control">
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                              O nome é obrigatório
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome da Mãe (*)</label>
+                            <input id="name" formControlName="mother_name" type="text" class="form-control">
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                              O nome é obrigatório
+                          </div>
+                          </div>
+                
+                          <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Endereço (*)</label>
+                            <input id="name" formControlName="address" type="text" class="form-control">
+                            <div class="text-red-500 mt-1 text-xs"
+                              *ngIf="formulario.get('address')?.errors  && formulario.get('address')?.touched">
+                              Este campo é obrigatório
+                            </div>
+                          </div>
+                        </div>
+                       <div class="w-full flex justify-end items-end">
+                          <button type="submit" class="px-3 py-2 bg-primary-btn  text-white">Salvar</button>
+                        </div>
+                    </form>
+                  </app-form-modal>
+                
+                <app-form-modal-remove (handleRemove)="handleRemove(item.id)" [item]="item" title="Eliminar"
+                  [name]="item.designation"></app-form-modal-remove>
+                <a [href]="printPDF(item)" target="_blank" download rel="noopener noreferrer">
+                <button class="px-1 text-gray-700 py-1 cursor-pointer rounded-sm flex items-center gap-1">
+                    <i class="pi pi-print"></i>
+                  </button>
+                </a>
+              </td>
+              
+              </tr>
+            
+              <tr *ngIf="filteredItems < 1">
+                <td class="border-none" colspan="4"><p class="text-xs text-center font-medium">Aguardando sua pesquisa</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+</ng-container>

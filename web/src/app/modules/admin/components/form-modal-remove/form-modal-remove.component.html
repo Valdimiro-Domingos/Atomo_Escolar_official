@@ -1,0 +1,68 @@
+<div class="w-full flex flex-1 justify-end">
+  <ng-container>
+  <svg width="20px"  (click)="handleShow()"  class="cursor-pointer" *ngIf="icone == 'async'" height="20px" viewBox="0 0 48 48" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
+    fill="#6e7881" stroke="#6e7881" stroke-width="0.624">
+    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+      stroke-width="3.5519999999999996">
+      <defs>
+        <style>
+          .cls-1 {
+            fill: none;
+            stroke: #6e7881;
+            stroke-miterlimit: 10;
+          }
+        </style>
+      </defs>
+      <path class="cls-1"
+        d="M34.65,15.16l2.73-3.52a1,1,0,0,0-.05-1.31C26.39-1.22,5.74,5.76,5.12,23.3a.4.4,0,0,1-.08.23.44.44,0,0,1-.37.21H2.74a.25.25,0,0,0-.19.4L8.1,31.32a.26.26,0,0,0,.39,0l5.56-7.17a.25.25,0,0,0-.2-.4H11.92a.41.41,0,0,1-.32-.15v-.06a.42.42,0,0,1-.1-.28,12.51,12.51,0,0,1,21.67-8A1,1,0,0,0,34.65,15.16Z">
+      </path>
+      <path class="cls-1"
+        d="M13.35,32.84l-2.73,3.52a1,1,0,0,0,.05,1.31c10.94,11.55,31.59,4.57,32.21-13a.4.4,0,0,1,.08-.23.44.44,0,0,1,.37-.21h1.93a.25.25,0,0,0,.19-.4L39.9,16.68a.26.26,0,0,0-.39,0L34,23.85a.25.25,0,0,0,.2.4h1.93a.41.41,0,0,1,.32.15v.06a.42.42,0,0,1,.1.28,12.51,12.51,0,0,1-21.67,8A1,1,0,0,0,13.35,32.84Z">
+      </path>
+    </g>
+    <g id="SVGRepo_iconCarrier">
+      <defs>
+        <style>
+          .cls-1 {
+            fill: none;
+            stroke: #6e7881;
+            stroke-miterlimit: 10;
+          }
+        </style>
+      </defs>
+      <path class="cls-1"
+        d="M34.65,15.16l2.73-3.52a1,1,0,0,0-.05-1.31C26.39-1.22,5.74,5.76,5.12,23.3a.4.4,0,0,1-.08.23.44.44,0,0,1-.37.21H2.74a.25.25,0,0,0-.19.4L8.1,31.32a.26.26,0,0,0,.39,0l5.56-7.17a.25.25,0,0,0-.2-.4H11.92a.41.41,0,0,1-.32-.15v-.06a.42.42,0,0,1-.1-.28,12.51,12.51,0,0,1,21.67-8A1,1,0,0,0,34.65,15.16Z">
+      </path>
+      <path class="cls-1"
+        d="M13.35,32.84l-2.73,3.52a1,1,0,0,0,.05,1.31c10.94,11.55,31.59,4.57,32.21-13a.4.4,0,0,1,.08-.23.44.44,0,0,1,.37-.21h1.93a.25.25,0,0,0,.19-.4L39.9,16.68a.26.26,0,0,0-.39,0L34,23.85a.25.25,0,0,0,.2.4h1.93a.41.41,0,0,1,.32.15v.06a.42.42,0,0,1,.1.28,12.51,12.51,0,0,1-21.67,8A1,1,0,0,0,13.35,32.84Z">
+      </path>
+    </g>
+  </svg>
+    <img *ngIf="!icone || icone == ''"  (click)="handleShow()"  src="assets/images/delete.svg" class="cursor-pointer" alt="" srcset="">
+  </ng-container>
+
+  <div *ngIf="showModal" class="modal fixed inset-0 w-screen h-screen bg-gray-300 bg-opacity-50 flex justify-center" (click)="handleBackdropClick($event)">
+    <div class="modal-content w-[35rem] max-h-[16rem] top-20 mx-3 shadow-lg  h-auto border-gray bg-gray-3  rounded-lg">
+      <div class="py-3 px-4 bg-gray-3 rounded-lg shadow-sm">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl">{{ title }}</h2>
+          <img src="assets/images/close.svg" class="cursor-pointer" (click)="handleClose()" alt="" srcset="">
+        </div>
+      </div>
+      
+      <div class="flex flex-col">
+        <div class="py-6 px-4 flex flex-col h-autos">
+          <p class="text-gray-700 text-left flex flex-wrap line-clamp-6">Tens certeza que pretendes {{icone == 'async' && !state ? 'adicionar aos desistentes' :(!state ? 'eleminar' : 'retirar dos desistentes' )}} (o) a {{name}}?</p>
+            <form *ngIf="icone == 'async'" [formGroup]="observationForm" class="py-2 h-[30px] mb-4">
+              <input formControlName="observation" placeholder="Digite uma observação" height="30" class="focus:outline-none border-gray-400 text-sm rounded-[1px] px-2 border-1 resize-none w-full h-[40px!important] border-nones py-4" id="">
+            </form>
+        </div>
+        <div class="modal-footer flex justify-end">
+          <button type="button" class="p-2 px-5 bg-[red!important] text-white" (click)="onRemove()">{{icone == 'async' ? 'Confirmar' : 'Eliminar'}}</button>
+          <button type="button" class="p-2 px-5 bg-primary-btn  text-white" (click)="handleClose()" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

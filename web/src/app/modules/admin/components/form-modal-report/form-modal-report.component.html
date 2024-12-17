@@ -1,0 +1,44 @@
+<div class="modal fixed inset-0 w-screen h-screen bg-opacity-50 bg-gray-300  flex items-center justify-center" (click)="handleBackdropClick($event)">
+  <div class="modal-content min-w-[20rem] w-auto min-h-[10rem]  mx-3 z-50 shadow-lg dark:bg-boxdark-2 h-auto border-gray bg-gray-3 dark:text-white rounded-lg">
+    <div class="p-4 bg-gray-3 dark:bg-boxdark-2 rounded-lg shadow-sm" *ngIf="!custom">
+      <div class="flex dark:text-white items-center justify-between">
+        <h2 class="text-xl dark:text-white font-fontBlack">{{ title | uppercase}}</h2>
+        <img src="assets/images/close.svg" class="cursor-pointer" (click)="handleClose()" alt="" srcset="">
+      </div>
+    </div>
+    <form (ngSubmit)="printPDF()" class="xl:w-[30vw] w-[80vw] p-3" [formGroup]="reportForm">
+      <div class="mb-3">
+        <label for="documentos" class="form-label font-medium text-sm">Documentos</label>
+        <select class="form-select" formControlName="type" id="documentos">
+          <option value="despesas">Despesas</option>
+          <!-- <option value="dropout">Desistentes</option> -->
+          <option value="fatura-recibo">Factura-Recibo</option>
+          <option value="matricula">Matrìcula</option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <label for="dataInicio" class="form-label font-medium text-sm">Data Inicio</label>
+        <input type="date" formControlName="date_of_issure" [value]="dataLocal"  class="form-control" id="dataInicio">
+      </div>
+      <div class="mb-3">
+        <label for="dataFim" class="form-label font-medium text-sm">Data Fim</label>
+        <input type="date" formControlName="date_due"  class="form-control" id="dataFim" defaultValue="2022-01-01">
+      </div>
+    <div class="mb-3 flex flex-1 justify-end px-3 gap-1">
+      <button type="button" class="btn btn-secondary" (click)="handleClose()">
+        <span>
+          Fechar
+        </span>
+      </button>
+
+      <button [disabled]="reportForm.invalid" class="btn btn-primary">
+        <!-- <a [href]=""  target="_blank" rel="noopener noreferrer"> -->
+          Procurar
+        <!-- </a> -->
+      </button>
+    </div>
+  </form>
+
+  </div>
+</div>

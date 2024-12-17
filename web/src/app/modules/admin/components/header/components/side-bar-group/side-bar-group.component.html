@@ -1,0 +1,53 @@
+<div class="w-full flex flex-1 justify-end">
+<ng-container *ngIf="!isIcon; else second" >
+    <li class="" (click)="handleShow()">
+      <span class="flex items-center cursor-pointer" title="User menu">
+          <span class="mr-2 d-sm-inline d-none text-gray-700">{{ user.name }}</span>
+          <figure class="avatar avatar-sm bg-slate-600 text-white flex items-center justify-center">
+              {{ user.name[0].toUpperCase() }}
+          </figure>
+      </span>
+    </li>
+  </ng-container>
+  <ng-template #second>
+    <span class="nav-link text-black cursor-pointer md:hidden" (click)="handleShow()">
+      <img src="assets/images/arrow-down.svg" alt="" srcset="">
+    </span>
+  </ng-template>
+
+  <div *ngIf="showModal" class="modal fixed inset-0 h-screen bg-opacity-50 bg-gray-100 w-screen flex items-center justify-center" (click)="handleBackdropClick($event)">
+    <div class="">
+      <div class="sidebar w-full sm:w-80 fixed right-0 top-[4.7rem] z-50 overflow-y-auto">
+          <div class="py-4 text-center flex flex-col justify-center bg-[#B2B2B2]" data-backround-image="../../assets/media/image/image1.jpg">
+              <figure class="avatar avatar-lg mb-3 text-white bg-slate-500 flex items-center self-center justify-center border-0">
+                  {{ user.name[0].toUpperCase() }}
+              </figure>
+              <h5 class="d-flex align-items-center justify-content-center">{{ user.name }}</h5>
+              <div>
+                  <!-- Balance: <strong>$500</strong> -->
+              </div>
+          </div>
+          <div class="card mb-0 card-body shadow-none">
+              <div class="mb-4">
+                  <div class="list-group list-group-flush">
+                      <!-- <a href="profile.html" class="list-group-item p-l-r-0">Profile</a> -->
+                      <!-- <a href="#" class="list-group-item p-l-r-0 d-flex">Followers</a> -->
+                      <!-- <a href="mail.html" class="list-group-item p-l-r-0 d-flex">
+                          Inbox <span class="badge badge-danger ml-auto">2</span>
+                      </a> -->
+                      <!-- <a href="#" class="list-group-item p-l-r-0">Billing</a> -->
+                      <!-- <a href="#" class="list-group-item p-l-r-0" data-sidebar-target="#settings">Settings</a> -->
+                      <a href="/dash/definitions/company" class="list-group-item p-l-r-0 text-slate-700">Perfil</a>
+                      <a href="/auth/logOut" class="list-group-item p-l-r-0 text-danger">Sair</a>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+      <!-- END: User Menu -->
+
+      <!-- BEGIN: Settings -->
+
+    </div>
+  </div>
+</div>

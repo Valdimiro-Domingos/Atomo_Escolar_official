@@ -1,0 +1,114 @@
+<app-pre-load *ngIf="isLoading"></app-pre-load>
+<div class="content bg-[#F0F2F3] min-h-screen">
+    <div class="page-header">
+        <app-breadcrumb [icon]="'pi pi-home'" [url]="[{ name: 'Dashboard',  url: '/dash/home' }]"></app-breadcrumb>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-lg-3 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <p class="text-muted font-medium text-xs text-gray-400">UTILIZADORES</p>
+                                    <h2 class="font-weight-bold text-2xl mt-2 text-gray-500">{{datas.dashboard.users}}
+                                    </h2>
+                                </div>
+                                <div>
+                                    <figure class="avatar">
+                                        <span class="avatar-title bg-success-bright text-success rounded-circle">
+                                            <i data-feather="users"></i>
+                                        </span>
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="d-inline-flex align-items-center">
+                                <!-- <span class="text-success d-inline-flex align-items-center mr-2 text-gray-500">
+                                    <span class="ti-arrow-up mr-2 text-gray-500"></span> 5.1%
+                                </span> Up from past week -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <p class="text-muted font-medium text-xs text-gray-400">ESTUDANTES</p>
+                                    <h2 class="text-muted mt-2 text-gray-500 text-2xl">{{datas.dashboard.enrollments}}
+                                    </h2>
+                                </div>
+                                <div>
+                                    <figure class="avatar">
+                                        <span class="avatar-title bg-info-bright text-info rounded-circle">
+                                            <i data-feather="log-in"></i>
+                                        </span>
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="d-inline-flex align-items-center">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <p class="text-muted font-medium text-xs text-gray-400">RECEITAS</p>
+                                    <h2 class="font-weight-bold mt-2 text-gray-500 text-2xl">{{
+                                        formatMoneyAOA(datas.dashboard.revenue || 0)}}</h2>
+                                </div>
+                                <div>
+                                    <figure class="avatar">
+                                        <span class="avatar-title bg-warning-bright text-warning rounded-circle">
+                                            <i data-feather="file-plus"></i>
+                                        </span>
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="d-inline-flex align-items-center">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div>
+                                    <p class="text-muted font-medium text-xs text-gray-400">DESPESAS</p>
+                                    <h2 class="font-weight-bold mt-2 text-gray-500 text-2xl">{{
+                                        formatMoneyAOA(datas.dashboard.expenses)}}</h2>
+                                </div>
+                                <div>
+                                    <figure class="avatar">
+                                        <span class="avatar-title bg-warning-bright text-warning rounded-circle">
+                                            <i data-feather="file-minus"></i>
+                                        </span>
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="d-inline-flex align-items-center">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- -->
+        <div class="col-md-12">
+            <div class="card p-3">
+                <!-- <p-chart type="line"  [data]="basicData" [options]="basicOptions"></p-chart> -->
+                <p-chart type="line" [data]="data" [options]="options"></p-chart>
+            </div>
+        </div>
+    </div>
+
+</div>
+<app-footer></app-footer>

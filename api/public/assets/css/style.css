@@ -1,0 +1,44 @@
+#pic {
+    display: none;
+}
+
+.newbtn {
+    cursor: pointer;
+}
+
+#blah {
+    border: 1px solid black;
+    max-width: 200px;
+    height: 200px;
+    margin-top: 10px;
+}
+
+#pic_2 {
+    display: none;
+}
+
+.newbtn_2 {
+    cursor: pointer;
+}
+
+#blah_2 {
+    border: 1px solid black;
+    max-width: 200px;
+    height: 200px;
+    margin-top: 10px;
+}
+
+#pic_3 {
+    display: none;
+}
+
+.newbtn_3 {
+    cursor: pointer;
+}
+
+#blah_3 {
+    border: 1px solid black;
+    max-width: 200px;
+    height: 200px;
+    margin-top: 10px;
+}

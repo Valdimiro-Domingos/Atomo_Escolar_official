@@ -1,0 +1,215 @@
+<app-pre-load *ngIf="isLoading"></app-pre-load>
+<div class="content bg-[#F0F2F3] h-screen">
+  <app-breadcrumb [icon]="'pi pi-cog'" [urlBase]="'Definições'" [urlMiddle]="'Empresa'" [url]="base"></app-breadcrumb>
+<div class="w-full mb-3 mt-3 flex flex-1 justify-end">
+  <!-- <app-form-modal [title]="'Dados do Aluno'"></app-form-modal> -->
+</div>
+<div class="row">
+<div class="col-md-12">
+  <!-- <app-filter [filter]="filter"></app-filter> -->
+  <div class="card shadow-none rounded-md border mt-5">
+      <h2 class="px-4 pt-4 text-xl font-medium">
+        Dados da Instituição
+      </h2>
+      <div class="card-body h-[380px]">
+        <div class="table-responsive">
+        <table id="user-list" class="table table-lg overflow-x-scroll">
+          <thead>
+          <tr>
+            <th *ngFor="let item of Heading">{{item}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{ datas.companies?.designation }}</td>
+            <td>{{ datas.companies?.nif }}</td>
+            <td>{{ datas.companies?.email }}</td>
+            <!-- <td>{{ datas.companies?.general_manager }}</td> -->
+            <!-- <td>{{ datas.companies?.pedagogical_manager }}</td> -->
+            <!-- <td>{{ datas.companies?.provincial_manager }}</td> -->
+            <!-- <td>{{ datas.companies?.municipal_manager }}</td> -->
+            <!-- <td class="underline"><a class="underline" [href]="datas.companies?.web_site" target="_blank" rel="noopener noreferrer">{{ datas.companies?.web_site }}</a></td> -->
+            <!-- <td>{{ datas.companies?.address }}</td> -->
+            <!-- <td>{{ datas.companies?.contact }}</td> -->
+            <!-- <td>{{ datas.companies?.share_capital }}</td> -->
+            <!-- <td>{{ datas.companies?.description }}</td> -->
+            <!-- <td>{{ datas.companies?.foundation_date }}</td> -->
+            <td>{{ datas.companies?.representative_name }}</td>
+            <!-- <td>{{ datas.companies?.representative_identification }}</td> -->
+            <!-- <td>{{ datas.companies?.country }}</td>
+            <td>{{ datas.companies?.city }}</td>
+            <td>{{ datas.companies?.whatsapp }}</td>
+            <td>{{ datas.companies?.facebook }}</td> -->
+            <td class="flex items-center gap-1 h-20">
+              <svg width="24px" (click)="(isFormLogo = true)" class="cursor-pointer" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.2639 15.9375L12.5958 14.2834C11.7909 13.4851 11.3884 13.086 10.9266 12.9401C10.5204 12.8118 10.0838 12.8165 9.68048 12.9536C9.22188 13.1095 8.82814 13.5172 8.04068 14.3326L4.04409 18.2801M14.2639 15.9375L14.6053 15.599C15.4112 14.7998 15.8141 14.4002 16.2765 14.2543C16.6831 14.126 17.12 14.1311 17.5236 14.2687C17.9824 14.4251 18.3761 14.8339 19.1634 15.6514L20 16.4934M14.2639 15.9375L18.275 19.9565M18.275 19.9565C17.9176 20 17.4543 20 16.8 20H7.2C6.07989 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4.12796 18.7313 4.07512 18.5321 4.04409 18.2801M18.275 19.9565C18.5293 19.9256 18.7301 19.8727 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V16.4934M4.04409 18.2801C4 17.9221 4 17.4575 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.07989 4 7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.4934M17 8.99989C17 10.1045 16.1046 10.9999 15 10.9999C13.8954 10.9999 13 10.1045 13 8.99989C13 7.89532 13.8954 6.99989 15 6.99989C16.1046 6.99989 17 7.89532 17 8.99989Z" stroke="#586A84" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+              
+              <app-form-modal (onClick)="patchValues(datas.companies)" title="Editar Instituição" [isEdit]="true">
+                <form (ngSubmit)="onUpdate(datas.companies)" [formGroup]="formulario" class="py-3 px-3 w-[90vw] xl:w-[60vw] space-y-3">
+                    
+                  <div class="grid grid-cols-3 gap-2">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Designação</label>
+                    <input id="designation" formControlName="designation" type="text" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('designation')?.errors  && formulario.get('designation')?.touched">
+                      O nome é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Descrição</label>
+                    <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('description')?.errors  && formulario.get('description')?.touched">
+                      A Descrição é obrigatória
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">NIF</label>
+                    <input id="nif" formControlName="nif" class="form-control" type="text">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('nif')?.errors  && formulario.get('nif')?.touched">
+                      O NIF é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Email</label>
+                    <input id="email" formControlName="email" class="form-control" type="email">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('email')?.errors  && formulario.get('email')?.touched">
+                      O Email é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">website</label>
+                    <input id="web_site" formControlName="web_site" type="text" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('web_site')?.errors  && formulario.get('web_site')?.touched">
+                      A url do website é obrigatória
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Endereço</label>
+                    <input id="address" formControlName="address" type="text" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('address')?.errors  && formulario.get('address')?.touched">
+                      O Endereço é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Contacto</label>
+                    <input id="contact" formControlName="contact" type="text" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('contact')?.errors  && formulario.get('contact')?.touched">
+                      O Contacto é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Capital Social</label>
+                    <input id="share_capital" type="number" formControlName="share_capital" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('share_capital')?.errors  && formulario.get('share_capital')?.touched">
+                      O Capital Social é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Data de fundação</label>
+                    <input id="foundation_date" type="date" formControlName="foundation_date" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('foundation_date')?.errors  && formulario.get('foundation_date')?.touched">
+                      A Data de fundação é obrigatória
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Nome Representativo</label>
+                    <input id="representative_name" type="text" formControlName="representative_name" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('representative_name')?.errors  && formulario.get('representative_name')?.touched">
+                      O Nome Representativo é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Identicação</label>
+                    <input id="representative_identification" type="text" formControlName="representative_identification" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('representative_identification')?.errors  && formulario.get('representative_identification')?.touched">
+                      A Identicação é obrigatória
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">País</label>
+                    <input id="country" type="text" formControlName="country" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('country')?.errors  && formulario.get('country')?.touched">
+                      O País é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Cidade</label>
+                    <input id="city" type="text" formControlName="city" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('city')?.errors  && formulario.get('city')?.touched">
+                      A Cidade é obrigatória
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Whatsapp</label>
+                    <input id="whatsapp" type="text" formControlName="whatsapp" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('whatsapp')?.errors  && formulario.get('whatsapp')?.touched">
+                      O contacto do whatsapp é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Nome do Director(a) geral</label>
+                    <input id="whatsapp" type="text" formControlName="general_manager" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('general_manager')?.errors  && formulario.get('general_manager')?.touched">
+                      Este campo é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Nome do Director(a) pedagógico</label>
+                    <input id="whatsapp" type="text" formControlName="pedagogical_manager" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('pedagogical_manager')?.errors  && formulario.get('pedagogical_manager')?.touched">
+                      Este campo é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Nome do Director(a) Provincial</label>
+                    <input id="whatsapp" type="text" formControlName="provincial_manager" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('provincial_manager')?.errors  && formulario.get('provincial_manager')?.touched">
+                      Este campo é obrigatório
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Nome do Director(a) Municipal</label>
+                    <input id="whatsapp" type="text" formControlName="municipal_manager" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('municipal_manager')?.errors  && formulario.get('municipal_manager')?.touched">
+                      Este campo é obrigatório
+                    </div>
+                  </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">facebook</label>
+                    <input id="facebook" type="text" formControlName="facebook" class="form-control">
+                    <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('facebook')?.errors  && formulario.get('facebook')?.touched">
+                      O contacto do facebook é obrigatório
+                    </div>
+                  </div>
+                  <div class="w-full flex justify-end items-end">
+                    <button type="submit" class="p-2 px-4 rounded-[10px]  bg-primary-btn  text-white">Salvar</button>
+                  </div>
+                </form>
+              </app-form-modal>
+            </td>
+          </tr>
+          </tbody>
+      </table>
+      </div>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+
+<app-footer></app-footer>
+
+
+
+<app-form-modal-uplode *ngIf="isFormLogo" (onClick)="fechar()" title="Carregar Logotipo da Instituição" [full]="true">
+  <form [formGroup]="formFile" (ngSubmit)="onUpload(datas.companies?.id)" class="py-3 px-3 w-[90vw] xl:w-[60vw] space-y-3">
+    <div class="mb-3">
+      <label for="formFile" class="form-label">Logotipo</label>
+      <input class="form-control" formControlName="logo" (change)="onFileSelected($event)" accept="image/*" type="file" id="formFile">
+    </div>
+
+    <div class="w-full flex justify-end items-end">
+      <button class="bg-save p-2 text-white" type="submit">Salvar</button>
+    </div>
+  </form>
+</app-form-modal-uplode>

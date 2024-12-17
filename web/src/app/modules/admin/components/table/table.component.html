@@ -1,0 +1,40 @@
+<div class="flex flex-col">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+
+    <div *ngIf="!FielInput"></div>
+    
+    
+    <div class="flex gap-2 mb-2 items-center" *ngIf="!FielInput">
+      <span class="p-input-icon-right flex items-center border-[0.5px] py-2 rounded-lg px-2">
+        <i class="pi pi-search"></i>
+        <input type="text" ((keyup))="customFilter()" [(ngModel)]="searchTerm" placeholder="Pesquisar...">
+      </span>
+    </div>
+  </div>
+</div>
+
+<div #tabela>
+  <p-table #dt [tableStyle]="{'min-width': '50rem'}" [value]="items | filter: searchTerm" [paginator]="true" [rows]="10"
+    [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a  {last} de {totalRecords} registros">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let item of heading" pSortableColumn="id" style="min-width: 12rem">
+          <span class="font-extrabold text-sm">{{item.toUpperCase()}}</span>
+          <p-sortIcon field="id"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-i="index">
+      <tr>
+        <ng-container *ngTemplateOutlet="renderItem; context: { $implicit: item, index: i }"></ng-container>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr class="">
+        <td [attr.colspan]="heading.length" style="text-align:center">
+          Nenhum registro encontrado.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

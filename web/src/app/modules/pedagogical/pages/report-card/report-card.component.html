@@ -1,0 +1,153 @@
+<app-pre-load *ngIf="isLoading"></app-pre-load>
+
+<div class="content bg-[#F0F2F3] h-screen">
+  <app-breadcrumb [icon]="'pi pi-briefcase'" [urlBase]="'Secretaria'" [url]="base"></app-breadcrumb>
+<div class="w-full mb-3 mt-3 flex flex-1 justify-end">
+    <form-full [title]="'Filtro Estudante'" [hidden]="true" [padrao]="false" [name]="'Filtro'" (onClick)="OpenModal()">
+        <form (ngSubmit)="onBuscar()" #form="ngForm" [formGroup]="baseForm" class="md:w-[90vw] xl:w-[50vw]" >
+            <div class="p-2  px-4">
+            
+             
+                <div class="mb-3">
+                    <label for="documentos" class="form-label font-medium text-sm">Turma</label>
+                    <select class="form-select" formControlName="turma" (change)="OnChange()" id="documentos">
+                        <option value="" disabled selected>Seleciona</option>
+                        <option [value]="item.id" *ngFor="let item of baseResponse.items.turmas">{{item.designation}}</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="documentos" class="form-label font-medium text-sm">Curso</label>
+                    <select class="form-select" formControlName="curso" (change)="OnChange()" id="documentos">
+                        <option value="" disabled selected>Seleciona</option>
+                        <option [value]="item.id" *ngFor="let item of baseResponse.items.courses">{{item.designation}}</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="documentos" class="form-label font-medium text-sm">Classe</label>
+                      <select class="form-select" formControlName="classe" (change)="OnChange()" id="documentos">
+                        <option value="" disabled selected>Seleciona</option>
+                        <option [value]="item.id" *ngFor="let item of baseResponse.items.classes">{{item.designation}}</option>
+                    </select>
+                </div>
+            
+            
+       
+                 <div class="mb-3">
+                    <label for="periodo" class="form-label font-medium text-sm">Periodo</label>
+                    <select class="form-select" formControlName="periodo" (change)="OnChange()" id="periodo">
+                        <option value="" disabled selected>Seleciona</option>
+                        <option [value]="item.id" *ngFor="let item of baseResponse.items.periods">{{item.designation}}</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="documentos" class="form-label font-medium text-sm">Sala</label>
+                    <select class="form-select" formControlName="sala" (change)="OnChange()" id="documentos">
+                        <option value="" disabled selected>Seleciona</option>
+                        <option [value]="item.id" *ngFor="let item of baseResponse.items.classrooms">{{item.designation}}</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="documentos" class="form-label font-medium text-sm">Ano Lectivo</label>
+                    <select class="form-select" formControlName="lectivo" (change)="OnChange()" id="documentos">
+                        <option value="" disabled selected>Seleciona</option>
+                        <option [value]="item.id" *ngFor="let item of baseResponse.items.school_year">{{item.designation}}</option>
+                    </select>
+                </div>
+                
+                 <div class="mb-3">
+                    <label for="documentos" class="form-label font-medium text-sm">Trimestre (*)</label>
+                    <select class="form-select" formControlName="trimestre" id="documentos">
+                        <option value="-1" disabled selected>Seleciona</option>
+                        <option [value]="item" *ngFor="let item of ['1', '2', '3']">{{item}} Trimestre</option>
+                    </select>
+                </div>
+            
+            
+                 <div class="mb-3">
+                    <label for="enrollment_id" class="form-label font-medium text-sm">Estudante (*)</label>
+                    <select class="form-select" formControlName="enrollment_id" id="enrollment_id">
+                      <option value="" disabled selected>Seleciona</option>
+                      <option [value]="item.enrollment.id" *ngFor="let item of studants">{{item?.name}}</option>
+                    </select>
+                </div>
+                
+                <div class="my-2">
+                   <div class="mb-3 flex flex-1 justify-end px-3 gap-1">
+                  <button (click)="onClose()" type="button" class="p-2 px-3 text-white bg-[red]">
+                    <span>
+                      Fechar
+                    </span>
+                  </button>
+            
+                  <button  class="p-2 px-3 btn-primary text-white bg-blue-800 ex">
+                    <!-- <a [href]=""  target="_blank" rel="noopener noreferrer"> -->
+                      {{studants && !baseForm.get('enrollment_id')?.value ? 'Procurar' : 'Emitir Boletim'}}
+                    <!-- </a> -->
+                  </button>
+                </div>
+            </div>
+            </div>
+        </form>
+  </form-full>
+</div>
+
+
+
+<div class="row">
+<div class="col-md-12">
+  <div class="card shadow-none rounded-md border">
+     <div class="col-md-12">
+      <p-table [value]="baseResponse.students" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5, 10, 20]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th
+              *ngFor="let item of ['Nº Processo', 'Nome', 'Identificação', 'Turma', 'Sala', 'Classe', 'Ano Lectivo', 'Período', 'Curso', 'Opções']">
+              {{item}}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td class="hidden"> {{ baseResponse.students | findIndex: item }}</td>
+            <td>{{ item.enrollment.enrollment_number }}</td>
+            <td>{{ item.enrollment.student.name }}</td>
+            <td>{{ item.enrollment.student.identity }}</td>
+            <td>{{ item.enrollment.turma.designation }}</td>
+            <td>{{ item.enrollment.class_room.designation }}</td>
+            <td>{{ item.enrollment.classe.designation }}</td>
+            <td>{{ item.enrollment.school_year.designation }}</td>
+            <td>{{ item.enrollment.period.designation }}</td>
+            <td>{{ item.enrollment.course.designation }}</td>
+            <td class="flex items-center gap-2 h-20 ">
+            
+            <a [href]="'#'" target="_blank" download rel="noopener noreferrer">
+                <button style="background: linear-gradient(180deg, #2476ED 0%, #49364D 100%);"
+                  class="px-1 text-white py-1 cursor-pointer rounded-sm flex items-center gap-1">
+                  <i class="pi pi-print"></i>
+                </button>
+              </a>
+              <!-- <app-form-modal-remove (handleRemove)="handleRemove(item.id)" [item]="item" title="Eliminar"
+                [name]="item.designation"></app-form-modal-remove> -->
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+          <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+      </p-table>
+    </div>
+
+  </div>
+</div>
+</div>
+</div>
+<app-footer></app-footer>

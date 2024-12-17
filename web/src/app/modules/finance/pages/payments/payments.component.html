@@ -1,0 +1,258 @@
+<app-pre-load *ngIf="isLoading"></app-pre-load>
+
+<div class="content bg-[#F0F2F3] h-full">
+  <app-breadcrumb [icon]="'pi pi-money-bill'" [urlBase]="'Finanças'" [url]="base"></app-breadcrumb>
+<div class="w-full mb-3 mt-3 flex flex-1 justify-end">
+  <app-form-modal [title]="'Factura Recibo'" (onClick)="clear()">
+    <form (ngSubmit)="onSave()" [formGroup]="formulario" class="py-3 max-h-[40rem] overflow-y-scroll px-3 w-[90vw] lg:w-[70vw] space-y-2">
+        <div class="grid grid-cols-2 gap-2">
+          <div class="form-group">
+            <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Nº</label>
+            <input  id="invoice_number" disabled value="{{invoice_number.invoice_number}}" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Estudante (*)</label>
+            <select formControlName="enrollment_id" (change)="seleciona_Estudante($event)" class="form-control">
+              <option value="" disabled [defaultSelected]="''">Selecione o estudante</option>
+              <option *ngFor="let item of studants" [value]="item.id">{{item.name}}</option>
+            </select>
+            <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('enrollment_id')?.errors  && formulario.get('enrollment_id')?.touched">
+              Este campo é obrigatório
+            </div>
+          </div>
+        </div>
+
+        <div (click)="toogleContainer()" class="bg-primary-btn w-full cursor-pointer p-2 rounded-md">
+          <h3 class="text-white">Detalhes</h3>
+        </div>
+        <div class="grid mx-2 grid-cols-2 gap-2">
+          <div class="form-group">
+            <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Data</label>
+            <input  id="invoice_number" disabled [value]="dataLocal" type="text" class="form-control" >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Data Vencimento (*)</label>
+            <input formControlName="due_date" type="date" [value]="dataLocal" class="form-control">
+            <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('due_date')?.errors  && formulario.get('due_date')?.touched">
+              Este campo é obrigatório
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Formas de Pagamento (*)</label>
+            <select formControlName="form_of_payment_id" class="form-control">
+              <option selected value="-1" disabled>Selecione a forma de pagamento</option>
+              <option *ngFor="let item of paymentForms.form_of_payment" [defaultSelected]="item.id" [value]="item.id" >{{item.designation}}</option>
+            </select>
+            <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('form_of_payment_id')?.errors  && formulario.get('form_of_payment_id')?.touched">
+              Este campo é obrigatório
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Moeda (*)</label>
+            <select formControlName="coin" class="form-control">
+              <option value="" disabled selected>Selecione a moeda</option>
+              <option [defaultSelected]="'Kwanza'" [value]="'Kwanza'">Kwanza</option>
+              <option [value]="'Dollar'">Dólar</option>
+            </select>
+            <div class="text-red-500 mt-1 text-xs" *ngIf="formulario.get('coin')?.errors  && formulario.get('coin')?.touched">
+              Este campo é obrigatório
+            </div>
+          </div>
+          <div class="form-group col-span-2">
+            <label for="exampleInputEmail1"  class="text-sm text-gray-700 mb-1">Utilizador</label>
+            <input  disabled value="{{user.name}}" type="text" class="form-control">
+          </div>
+        </div>
+      <ng-container *ngIf="isItem">
+        <div class="w-full my-3">
+          <table class="table border  table-responsive">
+            <thead class="p-3">
+              <th class="text-sm" *ngFor="let item of heading">{{ item }}</th>
+            </thead>
+            <tbody >
+              <tr>
+                <ng-container [formGroup]="formularioFormReconfirm">
+                  <td>
+                    <div class="form-group">
+                      <select  (change)="buscarCategory($event)" class="form-control">
+                        <option value="-1" selected disabled>Selecione a categoria</option>
+                        <option [value]="item.id"  *ngFor="let item of categoryDatas">{{item.designation}}</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <select id="article_id" (change)="artigoSelect($event, formularioFormReconfirm)"  formControlName="article_id" class="form-control">
+                        <option value="" selected>Selecione o artigo</option>
+                        <option [value]="item.id"  *ngFor="let item of articles">{{item.designation}}</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input  id="qtd" #qtd formControlName="qtd" (input)="autoQuantidade(qtd?.value)" type="number" class="form-control" >
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input id="price" readonly  formControlName="price" type="number" class="form-control active:bg-gray-100 bg-gray-100" >
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <select #discount (input)="autoPaid(discount.value)"  formControlName="discount" class="form-control">
+                        <option [value]="0" [defaultSelected]="0">0</option>
+                        <option [value]="25">25%</option>
+                        <option [value]="30">30%</option>
+                        <option [value]="40">40%</option>
+                        <option [value]="70">70%</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input  formControlName="rate" #rate (input)="autoMulta(rate.value)" [defaultValue]="0" type="text" class="form-control" >
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input formControlName="paid" id="paid" readonly [defaultValue]="0" type="text" class="form-control bg-gray-100" >
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <button type="button" (click)="createItemFormGroup(formularioFormReconfirm)" class=" bg-primary-btn p-2 w-full flex items-center justify-center text-white hover:bg-primary-btn">
+                        <i class="pi pi-plus"></i>
+                      </button>
+                    </div>
+                  </td>
+                </ng-container>
+
+              </tr>
+              <ng-container [formGroup]="formularioReconfirm" >
+                <ng-container formArrayName="itens">
+                  <tr *ngFor="let item of itens.controls.reverse(); let i = index" [formGroupName]="i">
+                      <td>
+                    <div class="form-group">
+                        <input readonly formControlName="category" type="tex" class="form-control bg-gray-100" >
+                    </div>
+                  </td>
+                    <td>
+                      <div class="form-group">
+                        <input readonly formControlName="article" type="tex" class="form-control bg-gray-100" >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <input  id="qtd" readonly formControlName="qtd" type="number" class="form-control bg-gray-100" >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <input  id="paid" readonly formControlName="price" type="number" class="form-control bg-gray-100" >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <input  formControlName="discount" [disabled]="true" readonly [defaultValue]="0" type="text" class="form-control bg-gray-100">
+
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <input  formControlName="rate" [disabled]="true" readonly [defaultValue]="0" type="text" class="form-control bg-gray-100">
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <input  formControlName="paid" [disabled]="true" [defaultValue]="0" type="text" class="form-control bg-gray-100" >
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <button (click)="removeItem(i)" class="btn bg-red-400 py-2 w-full flex items-center justify-center text-white hover:bg-red-400">
+                          <i class="pi pi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                    </tr>
+                </ng-container>
+              </ng-container>
+
+
+
+              <tr>
+                <td colspan="7" class="">
+                  <span class="flex flex-1 justify-end">Total Ilíquido</span>
+                </td>
+                <td>
+                  <input  id="invoice_number" disabled [value]="totalIliquid()" type="text" class="form-control" >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Observações</label>
+          <textarea  class="form-control" name="" id="" rows="6"></textarea>
+        </div>
+        <div class="shadow-md h-auto p-3">
+          <h3 class="font-medium">Resumo do Documento</h3>
+          <div class="grid grid-cols-2 gap-2 items-center border-t border-b my-3 py-2 px-2">
+            <h4>Total Ilíquido</h4>
+            <input  id="invoice_number" disabled [value]="totalIliquid()" type="text" class="form-control" >
+          </div>
+          <div class="grid grid-cols-2 gap-2 items-center border-t border-b my-3 py-2 px-2">
+            <h4>Total Descontos</h4>
+            <input  id="invoice_number" disabled value="{{0}}" type="text" class="form-control" >
+          </div>
+          <div class="grid grid-cols-2 gap-2 items-center border-t border-b my-3 py-2 px-2">
+            <h4>Total Impostos</h4>
+            <input  id="invoice_number" disabled value="{{0}}" type="text" class="form-control" >
+          </div>
+          <div class="grid grid-cols-2 gap-2 items-center border-t border-b my-3 py-2 px-2">
+            <h4>Impostos Retidos</h4>
+            <input  id="invoice_number" disabled value="{{0}}" type="text" class="form-control" >
+          </div>
+          <div class="grid grid-cols-2 gap-2 items-center border-t border-b my-3 py-2 px-2">
+            <h4>Total</h4>
+            <input  id="invoice_number" disabled [value]="totalIliquid()" type="text" class="form-control" >
+          </div>
+        </div>
+      </ng-container>
+      <div class="w-full flex gap-2 justify-end items-end">
+        <button (click)="onClose()" type="submit" class="btn bg-red-400 hover:bg-red-300 text-white">Cancelar</button>
+        <button type="submit" class="p-2 px-4 rounded-[10px]  bg-primary-btn  text-white">Finalizar</button>
+      </div>
+    </form>
+  </app-form-modal>
+</div>
+<div class="row">
+<div class="col-md-12">
+  <div class="card shadow-none rounded-md border">
+  
+      <div class="card-body">
+        <app-table [title]="'Pagamentos'" [items]="invocieDatas.invoice_receipts" [heading]="['Nº da Factura', 'Estudante', 'Data de emissão', 'Data de vencimento', 'Moeda', 'Opções']">
+          
+          <ng-template let-item #renderItem>
+            <td>{{ item.invoice_number }}</td>
+            <td>{{ item.client_name ?? item?.student?.name }}</td>
+            <td>{{ item.date_of_issue }}</td>
+            <td>{{ item.due_date }}</td>
+            <td>{{ item.coin }}</td>
+            <td class="flex items-center gap-1 h-20">
+              <!-- <app-form-modal-remove (handleRemove)="handleRemove(item.id)" [item]="item" title="Eliminar" [name]="item.designation"></app-form-modal-remove> -->
+              <a [href]="printPDF(item)" class="text-center" target="_blank" download>
+              <button class="px-1 text-gray-700 py-1 cursor-pointer rounded-sm flex items-center gap-1">
+                  <i class="pi pi-print"></i>
+                </button>
+              </a>
+            </td>
+          </ng-template>
+        </app-table>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+<app-footer></app-footer>

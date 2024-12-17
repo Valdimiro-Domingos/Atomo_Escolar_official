@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-body">
+      <h6 class="card-title text-gray-600">Filtros</h6>
+      <form>
+          <div class="row">
+              <div *ngFor="let item of filter" class="col-lg-3 col-md-6">
+                  <div class="form-group">
+                      <label class="text-sm font-medium mb-1">{{ item.label }}</label>
+                      <select class="form-control">
+                          <option [defaultSelected]="">selecione</option>
+                          <option value="" *ngFor="let opt of item?.select">{{ opt }}</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>

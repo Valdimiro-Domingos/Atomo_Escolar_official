@@ -1,0 +1,390 @@
+<div class="w-full flex flex-1 justify-end">
+  <ng-container
+      *ngIf="!showModal; else second" >
+      <li
+        class="list-none"
+        (click)="handleShow();">
+            <img src="assets/images/menu.svg" alt="" srcset="">
+      </li>
+    </ng-container>
+    <ng-template #second>
+      <span class="nav-link cursor-pointer" (click)="handleShow();">
+        <img src="assets/images/x.svg" alt="" srcset="">
+      </span>
+    </ng-template>
+
+    <div *ngIf="showModal" class="modal fixed inset-0 w-screen flex items-center justify-center" (click)="handleBackdropClick($event)">
+      <div class="w-[20rem] min-h-screen xl:hidden z-50 top-[75px] flex left-0  border-[0.5px] fixed bg-white">
+        <div class="border-r-[0.5px] py-4">
+          <ul class="flex flex-col gap-3 flex-1 items-center px-3">
+              <li
+                  [class.bg-[#2676ED]]="option === 'home'"
+                  (click)="setOption('home'); setUrlBase('home')"
+                  routerLink="/dash/home"
+                  class="w-14  text-slate-500   cursor-pointer h-12 flex items-center justify-center rounded-md">
+                      <span  [class.text-white]="option === 'home'" >
+                        <i class="pi pi-th-large"></i>
+                      </span>
+              </li>
+              <li
+                    [class.bg-[#2676ED]]="option === 'secretary'"
+                    routerLink="/dash/secretary"
+                    (click)="setOption('secretary'); setUrlBase('registration')" class="w-14  text-slate-500  cursor-pointer h-12 flex items-center justify-center rounded-md">
+                    <span  [class.text-white]="option === 'secretary'">
+                      <i class="pi pi-briefcase"></i>
+                    </span>
+              </li>
+              <li
+                  [class.bg-[#2676ED]]="option === 'finance'"
+                  routerLink="/dash/finance"
+                    (click)="setOption('finance'); setUrlBase('invoice-receipt')" class="w-14  text-slate-500  cursor-pointer h-12 flex items-center justify-center rounded-md">
+                    <span  [class.text-white]="option === 'finance'">
+                        <i class="pi pi-money-bill"></i>
+                    </span>
+              </li>
+              <li
+                  [class.bg-[#2676ED]]="option === 'pedagogical-area'"
+                  routerLink="/dash/pedagogical-area"
+                  (click)="setOption('pedagogical-area'); setUrlBase('schedule')" class="w-14  text-slate-500  cursor-pointer h-12 flex items-center justify-center rounded-md">
+                    <span  [class.text-white]="option === 'pedagogical-area'">
+                        <i class="pi pi-id-card"></i>
+                    </span>
+              </li>
+              <li
+                  [class.bg-[#2676ED]]="option === 'definitions'"
+                  routerLink="/dash/definitions/company"
+                  (click)="setOption('definitions'); setUrlBase('company')" class="w-14 z-[100] text-slate-500 cursor-pointer h-12 flex items-center justify-center rounded-md">
+                  <span (click)="setOption('definitions'); setUrlBase('company')"  [class.text-white]="option === 'definitions'">
+                    <i class="pi pi-cog"></i>
+                  </span>
+              </li>
+          </ul>
+      </div>
+      <div class="w-full h-auto overflow-y-scroll" [ngSwitch]="option">
+        <div class="py-4 px-2">
+          <div id="ecommerce" *ngSwitchDefault>
+              <ul class="flex flex-col gap-1">
+                  <li class="navigation-divider p-2 rounded-s d-flex align-items-center mb-3">
+                      <span class="text-gray-800 font-semibold px-2">Painel de Controle</span>
+                  </li>
+                  <li  [class.bg-gray-100]="option === 'home'"
+                      class="font-medium text-sm text-gray-500  px-2 rounded-md py-2 bg-slate-2 cursor-pointer">
+                          Dashboard
+                  </li>
+              </ul>
+          </div>
+          <div id="" class="w-full" *ngSwitchCase="'secretary'">
+            <ul class="flex flex-col gap-3">
+                <li class="d-flex align-items-center mb-3">
+                    <span class="text-gray-800 font-semibold">Secretaria</span>
+                </li>
+                <div>
+                  <li
+                    (click)="setUrlBase('registration')"
+                    [class.bg-gray-100]="urlBase === 'registration'"
+                    [class.text-[#2676ED]]="urlBase === 'registration'"
+                    [class.font-medium]="urlBase === 'registration'"
+                    routerLink="/dash/secretary/registration"
+                    class="hover:text-[#2676ED] text-sm px-2 w-full rounded-md py-2 text-gray-500 cursor-pointer"
+                    >
+                    Matrícula
+                  </li>
+                </div>
+                <!-- <li
+                  (click)="setUrlBase('confirmation')"
+                  [class.bg-gray-100]="urlBase === 'confirmation'"
+                  [class.text-[#2676ED]]="urlBase === 'confirmation'"
+                  [class.font-medium]="urlBase === 'confirmation'"
+                  [routerLink]="'/dash/secretary/confirmation'" class="hover:text-[#2676ED] py-2  text-sm px-2 bg-slate-2 cursor-pointer text-gray-500">
+                  Confirmação
+                </li> -->
+            </ul>
+          </div>
+          <div id="ecommerce" *ngSwitchCase="'finance'">
+            <ul class="flex flex-col gap-3">
+                <li class="navigation-divider d-flex mx-2 align-items-center mb-3">
+                    <span class="text-gray-800 font-semibold">Finanças</span>
+                </li>
+                <li class="w-full">
+                  <mat-expansion-panel class="mat-typography max-h-[300px] overflow-y-scroll border-none shadow-none">
+                    <mat-expansion-panel-header class="text-gray-700 hover:text-[#2676ED]">
+                      <li
+                      (click)="setUrlBase('articles')"
+                      [class.text-[#2676ED]]="urlBase === 'articles'"
+                      [class.font-medium]="urlBase === 'articles'"
+                      routerLink="/dash/finance/articles" class="hover:text-[#2676ED] font-semibold  text-sm px-2 py-2 rounded-md bg-slate-2 cursor-pointer text-gray-700">
+                      Artigos
+                      </li>
+                    </mat-expansion-panel-header>
+                    <ul class="flex flex-col gap-3">
+                      <li
+                      (click)="setUrlBase('type')"
+                      [class.bg-gray-100]="urlBase === 'type'"
+                      [class.text-[#2676ED]]="urlBase === 'type'"
+                      [class.font-medium]="urlBase === 'type'"
+                      routerLink="/dash/finance/type"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                      Tipo
+                    </li>
+                    <li
+                      (click)="setUrlBase('category')"
+                      [class.bg-gray-100]="urlBase === 'category'"
+                      [class.text-[#2676ED]]="urlBase === 'category'"
+                      [class.font-medium]="urlBase === 'category'"
+                      routerLink="/dash/finance/category"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                      Categoria
+                    </li>
+                    <li
+                        (click)="setUrlBase('tax')"
+                        [class.bg-gray-100]="urlBase === 'tax'"
+                        [class.text-[#2676ED]]="urlBase === 'tax'"
+                        [class.font-medium]="urlBase === 'tax'"
+                        routerLink="/dash/finance/tax"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                        Taxa
+                    </li>
+                    <li
+                        (click)="setUrlBase('retention')"
+                        [class.bg-gray-100]="urlBase === 'retention'"
+                        [class.text-[#2676ED]]="urlBase === 'retention'"
+                        [class.font-medium]="urlBase === 'retention'"
+                        routerLink="/dash/finance/retention"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                        Retenção
+                    </li>
+                    </ul>
+                  </mat-expansion-panel>
+                </li>
+                <hr>
+                <li class="w-full">
+                  <mat-expansion-panel class="mat-typography border-none shadow-none">
+                    <mat-expansion-panel-header class="text-gray-700 hover:text-[#2676ED]">
+                      <li
+                          (click)="setUrlBase('invoice-receipt')"
+                          [class.font-medium]="urlBase === 'invoice-receipt'"
+                          routerLink="/dash/finance/invoice-receipt" class="hover:text-[#2676ED]  text-sm px-2 py-2 rounded-md bg-slate-2 cursor-pointer text-gray-700">
+                          Documentos
+                      </li>
+                    </mat-expansion-panel-header>
+                    <ul class="flex flex-col gap-3">
+                      <li
+                      (click)="setUrlBase('invoice-receipt')"
+                      [class.bg-gray-100]="urlBase === 'invoice-receipt'"
+                      [class.text-[#2676ED]]="urlBase === 'invoice-receipt'"
+                      [class.font-medium]="urlBase === 'invoice-receipt'"
+                      routerLink="/dash/finance/invoice-receipt" class="hover:text-[#2676ED]  text-sm px-2 py-2 rounded-md bg-slate-2 cursor-pointer text-gray-700">
+                      Factura Recibo
+                  </li>
+                  <li
+                  (click)="setUrlBase('expenses')"
+                  [class.bg-gray-100]="urlBase === 'expenses'"
+                  [class.text-[#2676ED]]="urlBase === 'expenses'"
+                  [class.font-medium]="urlBase === 'expenses'"
+                  routerLink="/dash/finance/expenses" class="hover:text-[#2676ED]  text-sm px-2 py-2 rounded-md bg-slate-2 cursor-pointer text-gray-700">
+                  Despesas
+                </li>
+                    </ul>
+                  </mat-expansion-panel>
+                </li>
+            </ul>
+          </div>
+          <div id="ecommerce" *ngSwitchCase="'pedagogical-area'">
+            <ul class="flex flex-col gap-3">
+                <li class="navigation-divider d-flex mx-2 align-items-center mb-3">
+                    <span class="text-gray-800 font-semibold">Area Pedagógica</span>
+                </li>
+                <li
+                  (click)="setUrlBase('schedule')"
+                  [class.bg-gray-100]="urlBase === 'schedule'"
+                  [class.text-[#2676ED]]="urlBase === 'schedule'"
+                  [class.font-medium]="urlBase === 'schedule'"
+                  routerLink="/dash/pedagogical-area/schedule"  class="hover:text-[#2676ED] py-2  text-gray-700 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Pauta
+                </li>
+                <hr>
+                <li
+                  (click)="setUrlBase('time')"
+                  [class.bg-gray-100]="urlBase === 'time'"
+                  [class.text-[#2676ED]]="urlBase === 'time'"
+                  [class.font-medium]="urlBase === 'time'"
+                  routerLink="/dash/pedagogical-area/time"  class="hover:text-[#2676ED] py-2  text-gray-700 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Horário
+                </li>
+                <hr>
+                <!-- <li
+                  (click)="setUrlBase('mini-schedule')"
+                  [class.bg-gray-100]="urlBase === 'mini-schedule'"
+                  [class.text-[#2676ED]]="urlBase === 'mini-schedule'"
+                  [class.font-medium]="urlBase === 'mini-schedule'"
+                  routerLink="/dash/pedagogical-area/mini-schedule"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Mini-pauta
+                </li> -->
+                <li class="w-full h-auto">
+                  <mat-expansion-panel class="mat-typography max-h-[300px] overflow-y-scroll border-none shadow-none">
+                    <mat-expansion-panel-header class="text-gray-700 hover:text-[#2676ED]">
+                      Extra
+                    </mat-expansion-panel-header>
+                    <ul class="flex flex-col gap-3">
+                      <li
+                      (click)="setUrlBase('period')"
+                      [class.bg-gray-100]="urlBase === 'period'"
+                      [class.text-[#2676ED]]="urlBase === 'period'"
+                      [class.font-medium]="urlBase === 'period'"
+                      routerLink="/dash/pedagogical-area/period"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                      Período
+                    </li>
+                    <li
+                    (click)="setUrlBase('schoolYear')"
+                    [class.bg-gray-100]="urlBase === 'schoolYear'"
+                    [class.text-[#2676ED]]="urlBase === 'schoolYear'"
+                    [class.font-medium]="urlBase === 'schoolYear'"
+                    routerLink="/dash/pedagogical-area/schoolYear"
+                    class="hover:text-[#2676ED] text-sm mt-2 px-2 w-full rounded-md py-2 text-gray-500 cursor-pointer"
+                    >
+                    Ano Lectivo
+                  </li>
+                    <li
+                      (click)="setUrlBase('class')"
+                      [class.bg-gray-100]="urlBase === 'class'"
+                      [class.text-[#2676ED]]="urlBase === 'class'"
+                      [class.font-medium]="urlBase === 'class'"
+                      routerLink="/dash/pedagogical-area/class"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                      Classe
+                    </li>
+                    <li
+                        (click)="setUrlBase('discipline')"
+                        [class.bg-gray-100]="urlBase === 'discipline'"
+                        [class.text-[#2676ED]]="urlBase === 'discipline'"
+                        [class.font-medium]="urlBase === 'discipline'"
+                        routerLink="/dash/pedagogical-area/discipline"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                        Discíplina
+                    </li>
+                    <li
+                        (click)="setUrlBase('course')"
+                        [class.bg-gray-100]="urlBase === 'course'"
+                        [class.text-[#2676ED]]="urlBase === 'course'"
+                        [class.font-medium]="urlBase === 'course'"
+                        routerLink="/dash/pedagogical-area/course"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                        Curso
+                    </li>
+                    <li
+                        (click)="setUrlBase('classRooms')"
+                        [class.bg-gray-100]="urlBase === 'classRooms'"
+                        [class.text-[#2676ED]]="urlBase === 'classRooms'"
+                        [class.font-medium]="urlBase === 'classRooms'"
+                        routerLink="/dash/pedagogical-area/classRooms"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                        Sala
+                    </li>
+                    <li
+                        (click)="setUrlBase('trimester')"
+                        [class.bg-gray-100]="urlBase === 'trimester'"
+                        [class.text-[#2676ED]]="urlBase === 'trimester'"
+                        [class.font-medium]="urlBase === 'trimester'"
+                        routerLink="/dash/pedagogical-area/trimester"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                        Trimestre
+                    </li>
+                    <li
+                        (click)="setUrlBase('turma')"
+                        [class.bg-gray-100]="urlBase === 'turma'"
+                        [class.text-[#2676ED]]="urlBase === 'turma'"
+                        [class.font-medium]="urlBase === 'turma'"
+                        routerLink="/dash/pedagogical-area/turma"  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                        Turma
+                    </li>
+                    </ul>
+                  </mat-expansion-panel>
+                </li>
+                <hr>
+                <li class="w-full">
+                  <mat-expansion-panel class="mat-typography  max-h-[300px] overflow-y-scroll border-none shadow-none">
+                    <mat-expansion-panel-header class="text-gray-700 hover:text-[#2676ED]">
+                      Documentos
+                    </mat-expansion-panel-header>
+                    <ul class="flex flex-col gap-3">
+                      <li
+                      (click)="setUrlBase('declaration')"
+                      [class.bg-gray-100]="urlBase === 'declaration'"
+                      [class.text-[#2676ED]]="urlBase === 'declaration'"
+                      [class.font-medium]="urlBase === 'declaration'"
+                      routerLink="/dash/pedagogical-area/declaration"  class="cursor-pointer py-2 px-2 rounded-md text-gray-700">Declaração C/S Nota</li>
+                      <li
+                      (click)="setUrlBase('certification')"
+                      [class.bg-gray-100]="urlBase === 'certification'"
+                      [class.text-[#2676ED]]="urlBase === 'certification'"
+                      [class.font-medium]="urlBase === 'certification'"
+                      routerLink="/dash/pedagogical-area/certification"  class="cursor-pointer  py-2 px-2 rounded-md text-gray-700">Certificado</li>
+                    </ul>
+                  </mat-expansion-panel>
+                </li>
+            </ul>
+          </div>
+          <div id="ecommerce" *ngSwitchCase="'definitions'">
+            <ul class="flex flex-col gap-3">
+                <li class="navigation-divider d-flex align-items-center mb-3">
+                    <span class="text-gray-800 font-semibold mx-4">Definições</span>
+                </li>
+                <li class="w-full">
+                  <mat-expansion-panel class="mat-typography text-gray-700 border-none shadow-none">
+                    <mat-expansion-panel-header class="hover:text-[#2676ED]">
+                      Empresa
+                    </mat-expansion-panel-header>
+                    <ul class="flex flex-col gap-3">
+                      <li
+                        (click)="setUrlBase('company')"
+                        [class.bg-gray-100]="urlBase === 'company'"
+                        [class.text-[#2676ED]]="urlBase === 'company'"
+                        [class.font-medium]="urlBase === 'company'"
+                        routerLink="/dash/definitions/company" class="cursor-pointer py-2 px-2 text-gray-700">Instituição</li>
+
+                      <li
+                        (click)="setUrlBase('departaments')"
+                        [class.bg-gray-100]="urlBase === 'departaments'"
+                        [class.text-[#2676ED]]="urlBase === 'departaments'"
+                        [class.font-medium]="urlBase === 'departaments'"
+                        routerLink="/dash/definitions/departaments"  class="cursor-pointer px-2 py-2 text-gray-700">Departamentos</li>
+                      <li
+                        (click)="setUrlBase('banks')"
+                        [class.bg-gray-100]="urlBase === 'banks'"
+                        [class.text-[#2676ED]]="urlBase === 'banks'"
+                        [class.font-medium]="urlBase === 'banks'"
+                        routerLink="/dash/definitions/banks"  class="cursor-pointer px-2 py-2 text-gray-700">Bancos</li>
+                    </ul>
+                  </mat-expansion-panel>
+
+                </li>
+                <hr>
+                <li class="w-full">
+                  <mat-expansion-panel class="mat-typography border-none shadow-none">
+                    <mat-expansion-panel-header class="text-gray-500 hover:text-[#2676ED]">
+                      Gestão de Utilizadores
+                    </mat-expansion-panel-header>
+                    <ul class="flex flex-col gap-3">
+                      <li
+                        (click)="setUrlBase('users')"
+                        [class.bg-gray-100]="urlBase === 'users'"
+                        [class.text-[#2676ED]]="urlBase === 'users'"
+                        [class.font-medium]="urlBase === 'users'"
+                        routerLink="/dash/definitions/users"  class="cursor-pointer px-2 py-2 text-gray-700">Utilizadores</li>
+                      <li
+                        (click)="setUrlBase('role')"
+                        [class.bg-gray-100]="urlBase === 'role'"
+                        [class.text-[#2676ED]]="urlBase === 'role'"
+                        [class.font-medium]="urlBase === 'role'"
+                        routerLink="/dash/definitions/role"  class="cursor-pointer px-2 py-2 text-gray-700">Perfis</li>
+                      <li
+                          (click)="setUrlBase('permissions')"
+                          [class.bg-gray-100]="urlBase === 'permissions'"
+                          [class.text-[#2676ED]]="urlBase === 'permissions'"
+                          [class.font-medium]="urlBase === 'permissions'"
+                          routerLink="/dash/definitions/permissions"  class="cursor-pointer px-2 py-2 text-gray-700">Permissões</li>
+                    </ul>
+                  </mat-expansion-panel>
+                </li>
+                <!-- <li routerLink="/dash/definitions/reports" class="hover:text-[#2676ED] mx-3 bg-slate-2 cursor-pointer text-sm px-2 text-gray-500">
+                  Reportar Problema
+                </li> -->
+            </ul>
+          </div>
+      </div>
+      </div>
+      </div>
+
+    </div>
+  </div>

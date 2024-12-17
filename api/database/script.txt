@@ -1,0 +1,7 @@
+
+ALTER TABLE `enrollments`
+	ADD COLUMN `message` ENUM('matricula','confirmacao') 
+    NOT NULL DEFAULT 'matricula' AFTER `enrollment_number`;
+    
+    
+    ALTER TABLE `enrollments` ADD `message` ENUM('matricula','confirmacao') NULL DEFAULT 'matricula' AFTER `paid`; 

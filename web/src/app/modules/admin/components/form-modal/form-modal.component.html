@@ -1,0 +1,52 @@
+<div class="w-full flex flex-1 justify-end">
+  <ng-container *ngIf="!isEdit; else editButton">
+    <button *ngIf="!name; else othername" (click)="handleShow(); click()" style="background: linear-gradient(180deg, #2476ED 0%, #49364D 100%);" class="px-4 text-white py-2 rounded-lg flex items-center gap-1">
+      Novo
+      <img src="assets/images/add_circle.svg" alt="" srcset="">
+    </button>
+    <ng-template #othername>
+      <button  (click)="handleShow(); click()" style="background: linear-gradient(180deg, #2476ED 0%, #49364D 100%);" class="px-4 text-white py-2 rounded-lg flex items-center gap-1">
+        {{ name }}
+        <img src="assets/images/add_circle.svg" alt="" srcset="">
+      </button>
+    </ng-template>
+  </ng-container>
+  <ng-template #editButton>
+    <svg width="20px" (click)="handleShow(); click()"  *ngIf="uplode" class="cursor-pointer" height="20px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink" fill="#5654e3" stroke="#5654e3">
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+      <g id="SVGRepo_iconCarrier">
+        <title></title>
+        <g fill="none" fill-rule="evenodd" id="页面-1" stroke="none" stroke-width="1">
+          <g id="导航图标" transform="translate(-175.000000, -80.000000)">
+            <g id="编组" transform="translate(175.000000, 80.000000)">
+              <rect fill="#FFFFFF" fill-opacity="0.01" fill-rule="nonzero" height="24" id="矩形" width="24" x="0" y="0">
+              </rect>
+              <path
+                d="M2,4.5 L2,20.5 L4.5,10.5 L19.75,10.5 L19.75,7.5 C19.75,6.9477 19.3023,6.5 18.75,6.5 L12,6.5 L9.5,3.5 L3,3.5 C2.447715,3.5 2,3.947715 2,4.5 Z"
+                id="路径" stroke="#5654e3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+              <polygon id="路径" points="20 20.5 22 10.5 4.40625 10.5 2 20.5" stroke="#5654e3" stroke-linecap="round"
+                stroke-linejoin="round" stroke-width="1.5"></polygon>
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+    <img *ngIf="!uplode" class="cursor-pointer" (click)="handleShow(); click()"  src="assets/images/edit.svg" alt="" srcset="">
+  </ng-template>
+
+  <div *ngIf="showModal" class="modal fixed inset-0 w-screen h-screen bg-opacity-50 bg-gray-300  flex items-center justify-center" (click)="handleBackdropClick($event)">
+    <div [ngClass]="{'min-h-[20rem]' : autoHeight}" class="modal-content min-w-[10rem] w-auto mx-3 z-50 shadow-lg dark:bg-boxdark-2 h-auto border-gray bg-gray-3  rounded-lg">
+      <div class="p-4 bg-gray-3 dark:bg-boxdark-2 rounded-lg shadow-sm">
+        <div class="flex  items-center justify-between">
+          <h2 class="text-xl">{{ title }}</h2>
+          <img src="assets/images/close.svg" class="cursor-pointer" (click)="handleClose()" alt="" srcset="">
+        </div>
+      </div>
+      <ng-content>
+      </ng-content>
+    </div>
+
+  </div>
+</div>

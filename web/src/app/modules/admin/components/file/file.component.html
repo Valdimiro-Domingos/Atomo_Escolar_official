@@ -1,0 +1,4 @@
+<div class="file-upload justify-center flex items-center flex-col">
+  <input type="file" class="none" (change)="onFileSelected($event)" id="btn">
+  <label (click)="uploadFile()" for="btn" [ngClass]="{'on': loading}">{{( !loading ? label : '' )}}</label>
+</div>

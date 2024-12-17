@@ -1,0 +1,14 @@
+<div class="w-full">
+  <!-- <p-multiSelect  [options]="options" [(ngModel)]="selectedOptios" optionLabel="name">
+  </p-multiSelect> -->
+  <p-dropdown [options]="options" [(ngModel)]="selectedCountry" optionLabel="name" [filter]="true" 
+  filterBy="name" class="w-full form-control " [showClear]="true" placeholder="Select a Country">
+   
+      <ng-template let-country pTemplate="item">
+          <div class="flex align-items-center gap-2">
+              <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()" style="width: 18px"/>
+              <div>{{ country.name }}</div>
+          </div>
+      </ng-template>
+  </p-dropdown>
+</div>

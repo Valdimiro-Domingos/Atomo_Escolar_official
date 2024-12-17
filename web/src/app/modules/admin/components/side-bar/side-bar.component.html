@@ -1,0 +1,520 @@
+<div class="w-[20rem] min-h-screen hidden  z-50 top-[75px] xl:flex  border-[0.5px] fixed bg-white">
+  <div class="border-r-[0.5px] py-4">
+    <ul class="flex flex-col gap-3 flex-1 items-center px-3">
+      <li [class.bg-[#2676ED]]="option === 'home'" [title]="'Dashboard'" (click)="setOption('home'); setUrlBase('home')"
+        routerLink="/dash/home"
+        class="w-14  text-slate-500   cursor-pointer h-12 flex items-center justify-center rounded-md">
+        <span [class.text-white]="option === 'home'">
+          <i class="pi pi-th-large"></i>
+        </span>
+      </li>
+      <li [class.bg-[#2676ED]]="option === 'secretary'" [title]="'Secretaria'" routerLink="/dash/secretary"
+        (click)="setOption('secretary'); setUrlBase('registration')"
+        class="w-14  text-slate-500  cursor-pointer h-12 flex items-center justify-center rounded-md">
+        <span [class.text-white]="option === 'secretary'">
+          <i class="pi pi-briefcase"></i>
+        </span>
+      </li>
+      <li [class.bg-[#2676ED]]="option === 'finance'" [title]="'Finanças'" routerLink="/dash/finance"
+        (click)="setOption('finance'); setUrlBase('invoice-receipt')"
+        class="w-14  text-slate-500  cursor-pointer h-12 flex items-center justify-center rounded-md">
+        <span [class.text-white]="option === 'finance'">
+          <i class="pi pi-money-bill"></i>
+        </span>
+      </li>
+      <li [class.bg-[#2676ED]]="option === 'pedagogical-area'" [title]="'Area Pedagógica'"
+        routerLink="/dash/pedagogical-area" (click)="setOption('pedagogical-area'); setUrlBase('schedule')"
+        class="w-14  text-slate-500  cursor-pointer h-12 flex items-center justify-center rounded-md">
+        <span [class.text-white]="option === 'pedagogical-area'">
+          <i class="pi pi-id-card"></i>
+        </span>
+      </li>
+
+      <li [class.bg-[#2676ED]]="option === 'human-resource'" [hidden]="true" [title]="'Recursos Humano'"
+        routerLink="/dash/human-resource" (click)="setOption('human-resource'); setUrlBase('human-resource')"
+        class="w-14  text-slate-500  cursor-pointer h-12 flex items-center justify-center rounded-md">
+        <span [class.text-white]="option === 'human-resource'">
+          <i class="pi pi-home"></i>
+        </span>
+      </li>
+
+
+      <li (click)="OnReporte()" [title]="'Relatório'"
+        class="w-14 z-[100] text-slate-500 cursor-pointer h-12 flex items-center justify-center rounded-md">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="21 8 21 21 3 21 3 8"></polyline>
+          <rect x="1" y="3" width="22" height="5"></rect>
+          <line x1="10" y1="12" x2="14" y2="12"></line>
+        </svg>
+      </li>
+
+      <app-form-modal-report (onClick)="(modal = false)" *ngIf="modal"></app-form-modal-report>
+
+
+      <li [title]="'Configurações'" [class.bg-[#2676ED]]="option === 'definitions'"
+        routerLink="/dash/definitions/company" (click)="setOption('definitions'); setUrlBase('company')"
+        class="w-14 z-[100] text-slate-500 cursor-pointer h-12 flex items-center justify-center rounded-md">
+        <span (click)="setOption('definitions'); setUrlBase('company')" [class.text-white]="option === 'definitions'">
+          <i class="pi pi-cog"></i>
+        </span>
+      </li>
+
+    </ul>
+  </div>
+
+
+
+  <div class="w-full h-auto" [ngSwitch]="option">
+    <div class="py-4 px-2">
+      <div id="ecommerce" *ngSwitchDefault>
+        <ul class="flex flex-col gap-1">
+          <li class="navigation-divider p-2 rounded-s d-flex align-items-center mb-3">
+            <span class="text-gray-600 font-semibold px-2">Painel de Controle</span>
+          </li>
+          <li [class.bg-gray-100]="option === 'home'"
+            class="font-medium text-sm text-gray-500  px-2 rounded-md py-2 bg-slate-2 cursor-pointer">
+            Dashboard
+          </li>
+        </ul>
+      </div>
+
+      <div id="" class="w-full" *ngSwitchCase="'secretary'">
+        <ul class="flex flex-col gap-3">
+          <li class="d-flex align-items-center mb-3">
+            <span class="text-gray-600 font-semibold">Secretaria</span>
+          </li>
+          <div>
+            <li (click)="setUrlBase('registration')" [class.bg-gray-100]="urlBase === 'registration'"
+              [class.text-[#2676ED]]="urlBase === 'registration'" [class.font-medium]="urlBase === 'registration'"
+              routerLink="/dash/secretary/registration"
+              class="hover:text-[#2676ED] text-sm px-2 w-full rounded-md py-2 text-gray-500 cursor-pointer">
+              Matrícula
+            </li>
+            <li (click)="setUrlBase('students')" [class.bg-gray-100]="urlBase === 'students'"
+              [class.text-[#2676ED]]="urlBase === 'students'" [class.font-medium]="urlBase === 'students'"
+              routerLink="/dash/secretary/students"
+              class="hover:text-[#2676ED] text-sm px-2 w-full rounded-md py-2 text-gray-500 cursor-pointer">Estudantes
+            </li>
+
+            <li (click)="setUrlBase('dropout')" [class.bg-gray-100]="urlBase === 'dropout'"
+              [class.text-[#2676ED]]="urlBase === 'dropout'" [class.font-medium]="urlBase === 'dropout'"
+              [routerLink]="'/dash/secretary/dropout'"
+              class="hover:text-[#2676ED] py-2  text-sm px-2 bg-slate-2 cursor-pointer text-gray-500"> Desistentes </li>
+          </div>
+        </ul>
+      </div>
+
+
+      <div id="ecommerce" *ngSwitchCase="'finance'">
+        <ul class="flex flex-col gap-3">
+          <li class="navigation-divider d-flex mx-2 align-items-center mb-3">
+            <span class="text-gray-600 font-semibold">Finanças</span>
+          </li>
+          <li class="w-full">
+            <mat-expansion-panel class="mat-typography max-h-[300px] overflow-y-scroll border-none shadow-none">
+              <mat-expansion-panel-header class="text-gray-700 hover:text-[#2676ED]">
+          <li (click)="setUrlBase('articles')" [class.text-[#2676ED]]="urlBase === 'articles'"
+            [class.font-medium]="urlBase === 'articles'" routerLink="/dash/finance/articles"
+            class="hover:text-[#2676text-gray-600 font-semibold  text-sm px-2 py-2 rounded-md bg-slate-2 cursor-pointer text-gray-700">
+            Artigos
+          </li>
+          </mat-expansion-panel-header>
+          <ul class="flex flex-col gap-3">
+            <li (click)="setUrlBase('type')" [class.bg-gray-100]="urlBase === 'type'"
+              [class.text-[#2676ED]]="urlBase === 'type'" [class.font-medium]="urlBase === 'type'"
+              routerLink="/dash/finance/type"
+              class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+              Tipo
+            </li>
+            <li (click)="setUrlBase('category')" [class.bg-gray-100]="urlBase === 'category'"
+              [class.text-[#2676ED]]="urlBase === 'category'" [class.font-medium]="urlBase === 'category'"
+              routerLink="/dash/finance/category"
+              class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+              Categoria
+            </li>
+            <li (click)="setUrlBase('tax')" [class.bg-gray-100]="urlBase === 'tax'"
+              [class.text-[#2676ED]]="urlBase === 'tax'" [class.font-medium]="urlBase === 'tax'"
+              routerLink="/dash/finance/tax"
+              class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+              Taxa
+            </li>
+            <li (click)="setUrlBase('retention')" [class.bg-gray-100]="urlBase === 'retention'"
+              [class.text-[#2676ED]]="urlBase === 'retention'" [class.font-medium]="urlBase === 'retention'"
+              routerLink="/dash/finance/retention"
+              class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+              Retenção
+            </li>
+          </ul>
+          </mat-expansion-panel>
+          </li>
+          <hr>
+          <li class="w-full">
+            <mat-expansion-panel class="mat-typography border-none shadow-none">
+              <mat-expansion-panel-header class="text-gray-700 hover:text-[#2676ED]">
+          <li (click)="setUrlBase('invoice-receipt')" [class.font-medium]="urlBase === 'invoice-receipt'"
+            routerLink="/dash/finance/invoice-receipt"
+            class="hover:text-[#2676ED]  text-sm px-2 py-2 rounded-md bg-slate-2 cursor-pointer text-gray-700">
+            Documentos
+          </li>
+          </mat-expansion-panel-header>
+          <ul class="flex flex-col gap-3">
+            <li (click)="setUrlBase('invoice-receipt')" [class.bg-gray-100]="urlBase === 'invoice-receipt'"
+              [class.text-[#2676ED]]="urlBase === 'invoice-receipt'" [class.font-medium]="urlBase === 'invoice-receipt'"
+              routerLink="/dash/finance/invoice-receipt"
+              class="hover:text-[#2676ED]  text-sm px-2 py-2 rounded-md bg-slate-2 cursor-pointer text-gray-700">
+              Factura Recibo
+            </li>
+            <li (click)="setUrlBase('expenses')" [class.bg-gray-100]="urlBase === 'expenses'"
+              [class.text-[#2676ED]]="urlBase === 'expenses'" [class.font-medium]="urlBase === 'expenses'"
+              routerLink="/dash/finance/expenses"
+              class="hover:text-[#2676ED]  text-sm px-2 py-2 rounded-md bg-slate-2 cursor-pointer text-gray-700">
+              Despesas
+            </li>
+
+            <li (click)="modalOpen('bribes')"
+              class="hover:text-[#2676ED]  text-sm px-2 py-2 rounded-md bg-slate-2 cursor-pointer text-gray-700">
+              Relatorio de Propina
+            </li>
+
+
+            <li (click)="setUrlBase('bribes')" [hidden]="true" [class.bg-gray-100]="urlBase === 'bribes'"
+              [class.text-[#2676ED]]="urlBase === 'bribes'" [class.font-medium]="urlBase === 'bribes'"
+              class="hover:text-[#2676ED]  text-sm px-2 py-2 rounded-md bg-slate-2 cursor-pointer text-gray-700">
+              Propina Dados
+            </li>
+          </ul>
+          </mat-expansion-panel>
+          </li>
+        </ul>
+      </div>
+
+      <div id="ecommerce" *ngSwitchCase="'pedagogical-area'">
+        <ul class="flex flex-col gap-3">
+          <li class="navigation-divider d-flex mx-2 align-items-center mb-3">
+            <span class="text-gray-600 font-semibold">Area Pedagógica</span>
+          </li>
+
+
+          <li (click)="setUrlBase('time')" [class.bg-gray-100]="urlBase === 'time'"
+            [class.text-[#2676ED]]="urlBase === 'time'" [class.font-medium]="urlBase === 'time'"
+            routerLink="/dash/pedagogical-area/time"
+            class="hover:text-[#2676ED] py-2  text-gray-700 rounded-md bg-slate-2 cursor-pointer text-sm px-2"
+            [hidden]="true">
+            Horário
+          </li>
+
+
+          <hr>
+          <li class="w-full h-auto">
+            <mat-expansion-panel class="mat-typography max-h-[300px] overflow-y-scroll border-none shadow-none">
+              <mat-expansion-panel-header class="text-gray-700 hover:text-[#2676ED]">
+                Gestão de Pauta
+              </mat-expansion-panel-header>
+              <ul class="flex flex-col gap-3">
+                <li (click)="setUrlBase('schedule')" [class.bg-gray-100]="urlBase === 'schedule'"
+                  [class.text-[#2676ED]]="urlBase === 'schedule'" [class.font-medium]="urlBase === 'schedule'"
+                  routerLink="/dash/pedagogical-area/schedule"
+                  class="hover:text-[#2676ED] py-2  text-gray-700 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Pauta Geral
+                </li>
+
+                <li [hidden]="true" (click)="setUrlBase('mini-schedule')"
+                  [class.bg-gray-100]="urlBase === 'mini-schedule'" [class.text-[#2676ED]]="urlBase === 'mini-schedule'"
+                  [class.font-medium]="urlBase === 'mini-schedule'" routerLink="/dash/pedagogical-area/mini-schedule"
+                  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Mini-Pauta
+                </li>
+              </ul>
+            </mat-expansion-panel>
+          </li>
+
+
+
+
+
+          <hr>
+
+          <!--  -->
+          <li class="w-full h-auto">
+            <mat-expansion-panel class="mat-typography max-h-[300px] overflow-y-scroll border-none shadow-none">
+              <mat-expansion-panel-header class="text-gray-700 hover:text-[#2676ED]">
+                Extra
+              </mat-expansion-panel-header>
+              <ul class="flex flex-col gap-3">
+                <li (click)="setUrlBase('period')" [class.bg-gray-100]="urlBase === 'period'"
+                  [class.text-[#2676ED]]="urlBase === 'period'" [class.font-medium]="urlBase === 'period'"
+                  routerLink="/dash/pedagogical-area/period"
+                  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Período
+                </li>
+                <li [hidden]="true" (click)="setUrlBase('time')" [class.bg-gray-100]="urlBase === 'time'"
+                  [class.text-[#2676ED]]="urlBase === 'time'" [class.font-medium]="urlBase === 'time'"
+                  routerLink="/dash/pedagogical-area/time"
+                  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Horário
+                </li>
+                <li (click)="setUrlBase('schoolYear')" [class.bg-gray-100]="urlBase === 'schoolYear'"
+                  [class.text-[#2676ED]]="urlBase === 'schoolYear'" [class.font-medium]="urlBase === 'schoolYear'"
+                  [routerLink]="'/dash/pedagogical-area/schoolYear'"
+                  class="hover:text-[#2676ED] text-sm mt-2 px-2 w-full rounded-md py-2 text-gray-500 cursor-pointer">
+                  Ano Lectivo
+                </li>
+                <li (click)="setUrlBase('class')" [class.bg-gray-100]="urlBase === 'class'"
+                  [class.text-[#2676ED]]="urlBase === 'class'" [class.font-medium]="urlBase === 'class'"
+                  routerLink="/dash/pedagogical-area/class"
+                  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Classe
+                </li>
+                <li (click)="setUrlBase('discipline')" [class.bg-gray-100]="urlBase === 'discipline'"
+                  [class.text-[#2676ED]]="urlBase === 'discipline'" [class.font-medium]="urlBase === 'discipline'"
+                  routerLink="/dash/pedagogical-area/discipline"
+                  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Discíplina
+                </li>
+                <li (click)="setUrlBase('course')" [class.bg-gray-100]="urlBase === 'course'"
+                  [class.text-[#2676ED]]="urlBase === 'course'" [class.font-medium]="urlBase === 'course'"
+                  routerLink="/dash/pedagogical-area/course"
+                  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Curso
+                </li>
+                <li (click)="setUrlBase('classRooms')" [class.bg-gray-100]="urlBase === 'classRooms'"
+                  [class.text-[#2676ED]]="urlBase === 'classRooms'" [class.font-medium]="urlBase === 'classRooms'"
+                  routerLink="/dash/pedagogical-area/classRooms"
+                  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Sala
+                </li>
+
+                <li (click)="setUrlBase('trimester')" [class.bg-gray-100]="urlBase === 'trimester'"
+                  [class.text-[#2676ED]]="urlBase === 'trimester'" [class.font-medium]="urlBase === 'trimester'"
+                  routerLink="/dash/pedagogical-area/trimester"
+                  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Trimestre
+                </li>
+
+                <li (click)="setUrlBase('turma')" [class.bg-gray-100]="urlBase === 'turma'"
+                  [class.text-[#2676ED]]="urlBase === 'turma'" [class.font-medium]="urlBase === 'turma'"
+                  routerLink="/dash/pedagogical-area/turma"
+                  class="hover:text-[#2676ED]  text-gray-700 py-2 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Turma
+                </li>
+              </ul>
+            </mat-expansion-panel>
+          </li>
+          <hr>
+
+          <li class="w-full">
+            <mat-expansion-panel class="mat-typography  max-h-[300px] overflow-y-scroll border-none shadow-none">
+              <mat-expansion-panel-header class="text-gray-700 hover:text-[#2676ED]">
+                Documentos
+              </mat-expansion-panel-header>
+              <ul class="flex flex-col gap-3">
+
+
+                <form-report-card (onClick)="(modal_card = false)" *ngIf="modal_card"></form-report-card>
+
+
+                <li (click)="setUrlBase('certification')" [class.bg-gray-100]="urlBase === 'certification'"
+                  [class.text-[#2676ED]]="urlBase === 'certification'" [class.font-medium]="urlBase === 'certification'"
+                  routerLink="/dash/pedagogical-area/certification"
+                  class="cursor-pointer  py-2 px-2 rounded-md text-gray-700">Certificado</li>
+                <li (click)="setUrlBase('certification')" [class.bg-gray-100]="urlBase === 'certification'"
+                  [class.text-[#2676ED]]="urlBase === 'certification'" [class.font-medium]="urlBase === 'certification'"
+                  routerLink="/dash/pedagogical-area/certification"
+                  class="cursor-pointer  py-2 px-2 rounded-md text-gray-700">Boletim</li>
+
+                <li (click)="setUrlBase('declaration')" [hidden]="true" [class.bg-gray-100]="urlBase === 'declaration'"
+                  [class.text-[#2676ED]]="urlBase === 'declaration'" [class.font-medium]="urlBase === 'declaration'"
+                  routerLink="/dash/pedagogical-area/declaration"
+                  class="cursor-pointer py-2 px-2 rounded-md text-gray-700">Declaração C/S Nota</li>
+                <li (click)="setUrlBase('report-card')" [hidden]="true" [class.bg-gray-100]="urlBase === 'report-card'"
+                  [class.text-[#2676ED]]="urlBase === 'report-card'" [class.font-medium]="urlBase === 'report-card'"
+                  routerLink="/dash/pedagogical-area/report-card#"
+                  class="cursor-pointer  py-2 px-2 rounded-md text-gray-700" (click)="(modal_card = true)">Boletim</li>
+              </ul>
+            </mat-expansion-panel>
+          </li>
+        </ul>
+      </div>
+
+      <div id="ecommerce" *ngSwitchCase="'human-resource'" [hidden]="true">
+        <ul class="flex flex-col gap-3">
+          <li class="navigation-divider d-flex mx-2 align-items-center mb-3">
+            <span class="text-gray-600 font-semibold">Recursos Humano</span>
+          </li>
+
+          <hr>
+          <li class="w-full h-auto">
+            <mat-expansion-panel class="mat-typography max-h-[300px] overflow-y-scroll border-none shadow-none">
+              <mat-expansion-panel-header class="text-gray-700 hover:text-[#2676ED]">
+                Área de Funcionários
+              </mat-expansion-panel-header>
+              <ul class="flex flex-col gap-3">
+                <li (click)="setUrlBase('employee')" [class.bg-gray-100]="urlBase === 'employee'"
+                  [class.text-[#2676ED]]="urlBase === 'employee'" [class.font-medium]="urlBase === 'employee'"
+                  routerLink="/dash/human-resource/employee"
+                  class="hover:text-[#2676ED] py-2  text-gray-700 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Funcionários
+                </li>
+
+
+                <li (click)="setUrlBase('attendance')" [class.bg-gray-100]="urlBase === 'attendance'"
+                  [class.text-[#2676ED]]="urlBase === 'attendance'" [class.font-medium]="urlBase === 'attendance'"
+                  routerLink="/dash/human-resource/attendance"
+                  class="hover:text-[#2676ED] py-2  text-gray-700 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Presenças
+                </li>
+
+
+                <li (click)="setUrlBase('vacation')" [class.bg-gray-100]="urlBase === 'vacation'"
+                  [class.text-[#2676ED]]="urlBase === 'vacation'" [class.font-medium]="urlBase === 'vacation'"
+                  routerLink="/dash/human-resource/vacation"
+                  class="hover:text-[#2676ED] py-2  text-gray-700 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Férias
+                </li>
+
+                <li (click)="setUrlBase('salary')" [class.bg-gray-100]="urlBase === 'salary'"
+                  [class.text-[#2676ED]]="urlBase === 'salary'" [class.font-medium]="urlBase === 'salary'"
+                  routerLink="/dash/human-resource/salary"
+                  class="hover:text-[#2676ED] py-2  text-gray-700 rounded-md bg-slate-2 cursor-pointer text-sm px-2">
+                  Salários
+                </li>
+
+
+
+              </ul>
+            </mat-expansion-panel>
+          </li>
+
+
+          <hr>
+
+          <li class="w-full cursor-pointer  py-2 px-2 rounded-md text-gray-700">Relatorio</li>
+        </ul>
+      </div>
+
+
+      <div id="ecommerce" *ngSwitchCase="'definitions'">
+        <ul class="flex flex-col gap-3">
+          <li class="navigation-divider d-flex align-items-center mb-3">
+            <span class="text-gray-600 font-semibold mx-4">Definições</span>
+          </li>
+          <li class="w-full">
+            <mat-expansion-panel class="mat-typography text-gray-700 border-none shadow-none">
+              <mat-expansion-panel-header class="hover:text-[#2676ED]">
+                Empresa
+              </mat-expansion-panel-header>
+              <ul class="flex flex-col gap-3">
+                <li (click)="setUrlBase('company')" [class.bg-gray-100]="urlBase === 'company'"
+                  [class.text-[#2676ED]]="urlBase === 'company'" [class.font-medium]="urlBase === 'company'"
+                  routerLink="/dash/definitions/company" class="cursor-pointer py-2 px-2 text-gray-700">Instituição</li>
+
+                <li (click)="setUrlBase('departaments')" [class.bg-gray-100]="urlBase === 'departaments'"
+                  [class.text-[#2676ED]]="urlBase === 'departaments'" [class.font-medium]="urlBase === 'departaments'"
+                  routerLink="/dash/definitions/departaments" class="cursor-pointer px-2 py-2 text-gray-700">
+                  Departamentos</li>
+                <li (click)="setUrlBase('banks')" [class.bg-gray-100]="urlBase === 'banks'"
+                  [class.text-[#2676ED]]="urlBase === 'banks'" [class.font-medium]="urlBase === 'banks'"
+                  routerLink="/dash/definitions/banks" class="cursor-pointer px-2 py-2 text-gray-700">Bancos</li>
+              </ul>
+            </mat-expansion-panel>
+
+          </li>
+          <hr>
+          <li class="w-full">
+            <mat-expansion-panel class="mat-typography border-none shadow-none">
+              <mat-expansion-panel-header class="text-gray-500 hover:text-[#2676ED]">
+                Gestão de Utilizadores
+              </mat-expansion-panel-header>
+              <ul class="flex flex-col gap-3">
+                <li (click)="setUrlBase('users')" [class.bg-gray-100]="urlBase === 'users'"
+                  [class.text-[#2676ED]]="urlBase === 'users'" [class.font-medium]="urlBase === 'users'"
+                  routerLink="/dash/definitions/users" class="cursor-pointer px-2 py-2 text-gray-700">Utilizadores</li>
+                <li (click)="setUrlBase('role')" [class.bg-gray-100]="urlBase === 'role'"
+                  [class.text-[#2676ED]]="urlBase === 'role'" [class.font-medium]="urlBase === 'role'"
+                  routerLink="/dash/definitions/role" class="cursor-pointer px-2 py-2 text-gray-700">Perfis</li>
+                <li (click)="setUrlBase('permissions')" [class.bg-gray-100]="urlBase === 'permissions'"
+                  [class.text-[#2676ED]]="urlBase === 'permissions'" [class.font-medium]="urlBase === 'permissions'"
+                  routerLink="/dash/definitions/permissions" class="cursor-pointer px-2 py-2 text-gray-700">Permissões
+                </li>
+              </ul>
+            </mat-expansion-panel>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- opcao modal -->
+<ng-container *ngIf="modalStatus">
+  <div class="w-full h-full fixed inset-0 top-0 pt-28 bg-black/50 z-50 flex items-center flex-col">
+    <div class="absolute inset-0 w-full h-full z-0" (click)="modalClose()"></div>
+
+    <div class="z-10 bg-[#F0F2F3] w-[90vw] sm:w-[25vw] relative px-0 py-3 rounded-lg">
+      <form class="w-full" (ngSubmit)="onBribes()" [formGroup]="formBribes">
+        <div class="w-full flex items-center justify-between py-3 border-b px-3">
+          <h3 class="font-medium">Selecione a Data</h3>
+          <div class="text-md cursor-pointer font-extrabold" (click)="modalClose()">x</div>
+        </div>
+
+
+        <div class="w-full flex flex-col justify-start px-3 pt-3">
+          <div class="mb-2 w-full">
+            <label for="documentos" class="form-label font-normal text-sm">Relatorio</label>
+            <select class="form-select bg-transparent focus:outline-none" formControlName="document" id="documentos">
+              <option value="" disabled selected>Seleciona</option>
+              <option value="bribes">Propinas e Factura</option>
+              <option value="debts">Propinas e Devedores</option>
+            </select>
+          </div>
+
+          <div [hidden]="true" class="w-full">
+            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Data: (*)</label>
+          </div>
+
+          <div  [hidden]="true" class="flex justify-start w-full">
+            <div class="border p-1 px-2 flex items-center">
+              <i class="pi pi-calendar"></i>
+            </div>
+
+            <div class="w-full flex justify-between gap-2 border">
+              <div class="form-group w-full">
+                <input id="name" formControlName="dateOf" type="date"
+                  class="w-full form-control bg-transparent border-transparent text-xs">
+              </div>
+
+              <div class="form-group w-full">
+                <input id="name" formControlName="dateTo" type="date"
+                  class="w-full form-control bg-transparent border-transparent text-xs">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="w-full flex justify-end items-end mt-3">
+            <button type="submit" class="px-3 py-2 bg-primary-btn  text-white">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-container>
+
+<!-- 
+
+
+     <app-form-modal [name]="'Matrícula'" (onClick)="patchValues(null)" [title]="'Nova Matrícula'">
+        <form (ngSubmit)="onSave()" [formGroup]="formulario"
+          class="py-3 px-3 w-[90vw] max-h-[30rem] overflow-y-scroll xl:w-[60vw] space-y-3">
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome (*)</label>
+              <input id="name" formControlName="name" type="text" class="form-control">
+              <div class="text-red-500 mt-1 text-xs"
+                *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+                O nome é obrigatório
+              </div>
+            </div>
+-->

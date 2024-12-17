@@ -1,0 +1,125 @@
+
+body {margin-top: 0px;margin-left: 0px;}
+
+#page_1 {position:relative; overflow: hidden;margin: 24px 0px 38px 0px;padding: 0px;border: none;width: 794px;}
+
+#page_1 #p1dimg1 {position:absolute;top:0px;left:44px;z-index:-1;width:690px;height:1031px;}
+#page_1 #p1dimg1 #p1img1 {width:690px;height:1031px;}
+
+
+
+
+.dclr {clear:both;float:none;height:1px;margin:0px;padding:0px;overflow:hidden;}
+
+.ft0{font: bold 11px 'Calibri';line-height: 13px;}
+.ft1{font: 9px 'Calibri';line-height: 11px;}
+.ft2{font: 9px 'Calibri';line-height: 12px;}
+.ft3{font: bold 16px 'Segoe UI';line-height: 21px;}
+.ft4{font: bold 11px 'Segoe UI';line-height: 13px;}
+.ft5{font: bold 13px 'Calibri';line-height: 15px;}
+.ft6{font: 1px 'Segoe UI';line-height: 1px;}
+.ft7{font: bold 11px 'Segoe UI';color: #ffffff;line-height: 13px;}
+.ft8{font: 12px 'Calibri';line-height: 14px;}
+.ft9{font: 11px 'Segoe UI';line-height: 13px;}
+.ft10{font: 1px 'Segoe UI';line-height: 12px;}
+.ft11{font: 12px 'Segoe UI';line-height: 15px;}
+.ft12{font: bold 10px 'Segoe UI';line-height: 12px;}
+.ft13{font: 10px 'Segoe UI';line-height: 12px;}
+.ft14{font: bold 13px 'Segoe UI';line-height: 17px;}
+.ft15{font: 9px 'Segoe UI';line-height: 12px;}
+.ft16{font: 8px 'Tahoma';line-height: 10px;}
+
+.p0{text-align: left;padding-left: 44px;margin-top: 88px;margin-bottom: 0px;}
+.p1{text-align: left;padding-left: 44px;padding-right: 555px;margin-top: 1px;margin-bottom: 0px;}
+.p2{text-align: left;padding-left: 44px;margin-top: 0px;margin-bottom: 0px;}
+.p3{text-align: left;padding-left: 44px;padding-right: 541px;margin-top: 1px;margin-bottom: 0px;}
+.p4{text-align: left;padding-left: 568px;margin-top: 13px;margin-bottom: 0px;}
+.p5{text-align: right;padding-right: 59px;margin-top: 0px;margin-bottom: 0px;}
+.p6{text-align: left;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p7{text-align: left;padding-left: 8px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p8{text-align: left;padding-left: 4px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p9{text-align: left;padding-left: 29px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p10{text-align: right;padding-right: 14px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p11{text-align: right;padding-right: 10px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p12{text-align: right;padding-right: 9px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p13{text-align: right;padding-right: 21px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p14{text-align: right;padding-right: 25px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p15{text-align: right;padding-right: 4px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p16{text-align: right;padding-right: 15px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p17{text-align: left;padding-left: 44px;margin-top: 239px;margin-bottom: 0px;}
+.p18{text-align: right;padding-right: 65px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p19{text-align: right;padding-right: 40px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p20{text-align: right;padding-right: 7px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p21{text-align: right;padding-right: 23px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p22{text-align: right;padding-right: 144px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p23{text-align: right;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
+.p24{text-align: left;padding-left: 44px;margin-top: 8px;margin-bottom: 0px;}
+.p25{text-align: left;padding-left: 44px;margin-top: 14px;margin-bottom: 0px;}
+.p26{text-align: left;padding-left: 44px;margin-top: 11px;margin-bottom: 0px;}
+.p27{text-align: left;padding-left: 44px;margin-top: 6px;margin-bottom: 0px;}
+.p28{text-align: left;padding-left: 44px;margin-top: 96px;margin-bottom: 0px;}
+
+.td0{border-top: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 336px;vertical-align: bottom;}
+.td1{border-right: #a9a9a9 1px solid;border-top: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 105px;vertical-align: bottom;}
+.td2{border-right: #a9a9a9 1px solid;border-top: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 82px;vertical-align: bottom;}
+.td3{border-right: #a9a9a9 1px solid;border-top: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 82px;vertical-align: bottom;background: #000000;}
+.td4{padding: 0px;margin: 0px;width: 336px;vertical-align: bottom;}
+.td5{border-right: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 105px;vertical-align: bottom;}
+.td6{border-right: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 82px;vertical-align: bottom;}
+.td7{padding: 0px;margin: 0px;width: 75px;vertical-align: bottom;background: #000000;}
+.td8{border-right: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 7px;vertical-align: bottom;background: #000000;}
+.td9{border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 24px;vertical-align: bottom;}
+.td10{border-right: #a9a9a9 1px solid;border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 58px;vertical-align: bottom;}
+.td11{border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 75px;vertical-align: bottom;background: #000000;}
+.td12{border-right: #a9a9a9 1px solid;border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 7px;vertical-align: bottom;background: #000000;}
+.td13{border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 58px;vertical-align: bottom;}
+.td14{border-right: #a9a9a9 1px solid;border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 24px;vertical-align: bottom;}
+.td15{padding: 0px;margin: 0px;width: 106px;vertical-align: bottom;}
+.td16{padding: 0px;margin: 0px;width: 24px;vertical-align: bottom;}
+.td17{padding: 0px;margin: 0px;width: 59px;vertical-align: bottom;}
+.td18{padding: 0px;margin: 0px;width: 75px;vertical-align: bottom;}
+.td19{padding: 0px;margin: 0px;width: 8px;vertical-align: bottom;}
+.td20{padding: 0px;margin: 0px;width: 58px;vertical-align: bottom;}
+.td21{padding: 0px;margin: 0px;width: 25px;vertical-align: bottom;}
+.td22{padding: 0px;margin: 0px;width: 130px;vertical-align: bottom;}
+.td23{padding: 0px;margin: 0px;width: 134px;vertical-align: bottom;}
+.td24{padding: 0px;margin: 0px;width: 91px;vertical-align: bottom;}
+.td25{border-top: #a9a9a9 1px solid;border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 336px;vertical-align: bottom;}
+.td26{border-top: #a9a9a9 1px solid;border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 106px;vertical-align: bottom;}
+.td27{border-top: #a9a9a9 1px solid;border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 24px;vertical-align: bottom;}
+.td28{border-top: #a9a9a9 1px solid;border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 59px;vertical-align: bottom;}
+.td29{border-top: #a9a9a9 1px solid;border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 75px;vertical-align: bottom;}
+.td30{border-top: #a9a9a9 1px solid;border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 8px;vertical-align: bottom;}
+.td31{border-top: #a9a9a9 1px solid;border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 58px;vertical-align: bottom;}
+.td32{padding: 0px;margin: 0px;width: 83px;vertical-align: bottom;}
+.td33{border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 140px;vertical-align: bottom;}
+.td34{border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 107px;vertical-align: bottom;}
+.td35{border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 106px;vertical-align: bottom;}
+.td36{border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 198px;vertical-align: bottom;}
+.td37{border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 139px;vertical-align: bottom;}
+.td38{padding: 0px;margin: 0px;width: 140px;vertical-align: bottom;}
+.td39{padding: 0px;margin: 0px;width: 107px;vertical-align: bottom;}
+.td40{padding: 0px;margin: 0px;width: 198px;vertical-align: bottom;}
+.td41{padding: 0px;margin: 0px;width: 139px;vertical-align: bottom;}
+.td42{border-bottom: #a9a9a9 1px solid;padding: 0px;margin: 0px;width: 304px;vertical-align: bottom;}
+.td43{padding: 0px;margin: 0px;width: 639px;vertical-align: bottom;}
+.td44{padding: 0px;margin: 0px;width: 47px;vertical-align: bottom;}
+
+.tr0{height: 19px;}
+.tr1{height: 16px;}
+.tr2{height: 34px;}
+.tr3{height: 18px;}
+.tr4{height: 26px;}
+.tr5{height: 14px;}
+.tr6{height: 13px;}
+.tr7{height: 12px;}
+.tr8{height: 44px;}
+.tr9{height: 35px;}
+.tr10{height: 21px;}
+.tr11{height: 17px;}
+.tr12{height: 31px;}
+.tr13{height: 15px;}
+
+.t0{width: 690px;margin-left: 44px;font: 11px 'Segoe UI';}
+.t1{width: 690px;margin-left: 44px;margin-top: 4px;font: 11px 'Segoe UI';}
+.t2{width: 686px;margin-left: 44px;margin-top: 3px;font: 9px 'Segoe UI';}

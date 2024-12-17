@@ -1,0 +1,48 @@
+<div class="modal fixed inset-0 w-screen h-screen bg-opacity-50 bg-gray-300  flex items-center justify-center" (click)="handleBackdropClick($event)">
+  <div class="modal-content min-w-[20rem] w-auto min-h-[10rem]  mx-3 z-50 shadow-lg dark:bg-boxdark-2 h-auto border-gray bg-gray-3 dark:text-white rounded-lg">
+    <div class="p-4 bg-gray-3 dark:bg-boxdark-2 rounded-lg shadow-sm" *ngIf="!custom">
+      <div class="flex dark:text-white items-center justify-between">
+        <h2 class="text-xl dark:text-white font-fontBlack">{{ title | uppercase}}</h2>
+        <img src="assets/images/close.svg" class="cursor-pointer" (click)="handleClose()" alt="" srcset="">
+      </div>
+    </div>
+    <form (ngSubmit)="printPDF()" class="xl:w-[30vw] w-[80vw] p-3" [formGroup]="reportForm">
+      <div class="mb-3">
+        <label for="documentos" class="form-label font-medium text-sm">Filtrar</label>
+        <select class="form-select" formControlName="type" id="documentos">
+          <option value="" disabled selected>Seleciona tipo</option>
+          <option value="geral">Todos</option>
+          <option value="unico">Unico</option>
+        </select>
+      </div>
+      
+      <!-- filtro estudantes -->
+      <div class="mb-3" *ngIf="reportForm.get('type')?.value == 'unico'">
+        <label for="estudantes" class="form-label font-medium text-sm">Estudante</label>
+        <select class="form-select" formControlName="type" id="documentos">
+          <option value="" disabled selected>Seleciona</option>
+          <option value="geral">Todos</option>
+        </select>
+      </div>
+      
+      
+  
+  
+      
+    <div class="mb-3 flex flex-1 justify-end px-3 gap-1">
+      <button type="button" class="btn btn-secondary" (click)="handleClose()">
+        <span>
+          Fechar
+        </span>
+      </button>
+
+      <button [disabled]="reportForm.invalid" class="btn btn-primary">
+        <!-- <a [href]=""  target="_blank" rel="noopener noreferrer"> -->
+          Procurar
+        <!-- </a> -->
+      </button>
+    </div>
+  </form>
+
+  </div>
+</div>

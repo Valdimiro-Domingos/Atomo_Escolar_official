@@ -1,0 +1,238 @@
+<div class="header bg-white d-print-none">
+    <div class="w-full absolute text-center p-2 hidden sm:block" *ngIf="systemStatus.status">
+        <span class="text-xs p-2 bg-slate-100 border-solid border-red-400 border-1 rounded-lg" >{{ systemStatus.description }} <strong>{{ systemStatus.time }}</strong></span>
+    </div>
+    
+    
+  <div class="header-left">
+      <div class="flex xl:hidden cursor-pointer">
+          <app-nav-bar-hamburguer></app-nav-bar-hamburguer>
+      </div>
+      <div class="header-logo">
+          <a href="/dash">
+              <img class="logo" width="55" height="50" [src]="logoUrl()" alt="logo">
+            </a>
+        </div>
+    </div>
+    
+
+  <div class="header-body">
+      <div class="flex flex-1 justify-end items-center">
+          <ul class="hidden md:flex items-center gap-3">
+              <!-- <li class="flex items-center">
+                  <a href="" class="nav-link flex items-center gap-2" title="Fullscreen" data-toggle="fullscreen">
+                      <i  data-feather="maximize" class="text-gray-700"></i>
+                      <i  data-feather="minimize" class="text-gray-700"></i>
+                  </a>
+              </li>
+              <li class="flex items-center">
+                  <a href="#" class="nav-link" title="Search" data-toggle="dropdown">
+                      <i data-feather="search" class="text-gray-700"></i>
+                  </a>
+
+              </li> -->
+<!--
+              <li class="">
+                  <a href="#" class="nav-link nav-link-notify" title="Notifications" data-toggle="dropdown">
+                      <i data-feather="bell" class="text-gray-700"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
+                      <div class="bg-dark p-4 text-center d-flex justify-content-between align-items-center">
+                          <h5 class="mb-0">Notifications</h5>
+                          <small class="opacity-7">1 unread notifications</small>
+                      </div>
+                      <div>
+                          <ul class="list-group list-group-flush">
+                              <li>
+                                  <a href="#" class="list-group-item d-flex align-items-center hide-show-toggler">
+                                      <div>
+                                          <figure class="avatar mr-2">
+                                          <span
+                                              class="avatar-title bg-success-bright text-success rounded-circle">
+                                              <i class="ti-user"></i>
+                                          </span>
+                                          </figure>
+                                      </div>
+                                      <div class="flex-grow-1">
+                                          <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                              New customer registered
+                                              <i title="Mark as read" data-toggle="tooltip"
+                                              class="hide-show-toggler-item fa fa-circle-o font-size-11"></i>
+                                          </p>
+                                          <span class="text-muted small">20 min ago</span>
+                                      </div>
+                                  </a>
+                              </li>
+                              <li class="text-divider small pb-2 pl-3 pt-3">
+                                  <span>Old notifications</span>
+                              </li>
+                              <li>
+                                  <a href="#" class="list-group-item d-flex align-items-center hide-show-toggler">
+                                      <div>
+                                          <figure class="avatar mr-2">
+                                          <span
+                                              class="avatar-title bg-warning-bright text-warning rounded-circle">
+                                              <i class="ti-package"></i>
+                                          </span>
+                                          </figure>
+                                      </div>
+                                      <div class="flex-grow-1">
+                                          <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                              New Order Recieved
+                                              <i title="Mark as unread" data-toggle="tooltip"
+                                              class="hide-show-toggler-item fa fa-check font-size-11"></i>
+                                          </p>
+                                          <span class="text-muted small">45 sec ago</span>
+                                      </div>
+                                  </a>
+                              </li>
+                              <li>
+                                  <a href="#"
+                                  class="list-group-item d-flex align-items-center hide-show-toggler">
+                                      <div>
+                                          <figure class="avatar mr-2">
+                                          <span class="avatar-title bg-danger-bright text-danger rounded-circle">
+                                              <i class="ti-server"></i>
+                                          </span>
+                                          </figure>
+                                      </div>
+                                      <div class="flex-grow-1">
+                                          <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                              Server Limit Reached!
+                                              <i title="Mark as unread" data-toggle="tooltip"
+                                              class="hide-show-toggler-item fa fa-check font-size-11"></i>
+                                          </p>
+                                          <span class="text-muted small">55 sec ago</span>
+                                      </div>
+                                  </a>
+                              </li>
+                              <li>
+                                  <a href="#"
+                                  class="list-group-item d-flex align-items-center hide-show-toggler">
+                                      <div>
+                                          <figure class="avatar mr-2">
+                                          <span class="avatar-title bg-info-bright text-info rounded-circle">
+                                              <i class="ti-layers"></i>
+                                          </span>
+                                          </figure>
+                                      </div>
+                                      <div class="flex-grow-1">
+                                          <p class="mb-0 line-height-20 d-flex align-items-center justify-content-between">
+                                              Apps are ready for update
+                                              <i title="Mark as unread" data-toggle="tooltip"
+                                              class="hide-show-toggler-item fa fa-check font-size-11"></i>
+                                          </p>
+                                          <span class="text-muted small">Yesterday</span>
+                                      </div>
+                                  </a>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="p-2 text-right border-top">
+                          <ul class="list-inline small">
+                              <li class="list-inline-item mb-0">
+                                  <a href="#">Mark All Read</a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </li>
+
+              <li class="">
+                  <a href="#" title="Cart" class="nav-link" data-toggle="dropdown">
+                      <i data-feather="shopping-bag" class="text-gray-700"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
+                      <div class="bg-dark p-4 text-center d-flex justify-content-between align-items-center">
+                          <h5 class="mb-0">Cart</h5>
+                          <small class="opacity-7">3 products</small>
+                      </div>
+                      <div>
+                          <div class="list-group list-group-flush">
+                              <a href="#" class="p-3 list-group-item d-flex">
+                                  <div>
+                                      <figure class="avatar mr-3">
+                                          <img src="../../assets/media/image/products/product6.png"
+                                              alt="Canon 4000D 18-55 MM">
+                                      </figure>
+                                  </div>
+                                  <div class="flex-grow-1">
+                                      <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                          Canon 4000D 18-55 MM
+                                          <i title="Close" data-toggle="tooltip"
+                                          class="hide-show-toggler-item ti-close"></i>
+                                      </p>
+                                      <span class="text-muted small">1 X $1,200</span>
+                                  </div>
+                              </a>
+                              <a href="#" class="p-3 list-group-item d-flex">
+                                  <div>
+                                      <figure class="avatar mr-3">
+                                          <img src="../../assets/media/image/products/product3.png"
+                                              alt="pineapple">
+                                      </figure>
+                                  </div>
+                                  <div class="flex-grow-1">
+                                      <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                          Snopy SN-BT96 Pretty
+                                          <i title="Close" data-toggle="tooltip"
+                                          class="hide-show-toggler-item ti-close"></i>
+                                      </p>
+                                      <span class="text-muted small">1 X $250</span>
+                                  </div>
+                              </a>
+                              <a href="#" class="p-3 list-group-item d-flex">
+                                  <div>
+                                      <figure class="avatar mr-3">
+                                          <img src="../../assets/media/image/products/product7.png"
+                                              class="rounded" alt="pineapple">
+                                      </figure>
+                                  </div>
+                                  <div class="flex-grow-1">
+                                      <p class="mb-0 line-height-20 d-flex justify-content-between">
+                                          Lenovo Tab E10 TB-X104F 32GB
+                                          <i title="Close" data-toggle="tooltip"
+                                          class="hide-show-toggler-item ti-close"></i>
+                                      </p>
+                                      <span class="text-muted small">2 X $100</span>
+                                  </div>
+                              </a>
+                          </div>
+                      </div>
+                      <div class="p-3 border-top text-right">
+                          <p class="d-flex justify-content-between align-items-center mb-2">
+                              <span>Sub Total</span>
+                              <span>$1,650</span>
+                          </p>
+                          <p class="d-flex justify-content-between align-items-center mb-2">
+                              <span>Taxes</span>
+                              <span>$15</span>
+                          </p>
+                          <p class="d-flex justify-content-between align-items-center mb-2 font-weight-bold">
+                              <span>Total</span>
+                              <span>$1,675</span>
+                          </p>
+                          <button class="btn btn-primary btn-block mt-2">
+                              Order and Payment <i class="ti-arrow-right ml-2"></i>
+                          </button>
+                      </div>
+                  </div>
+              </li> -->
+
+              <!-- <li class="">
+                  <a href="#" class="nav-link" title="Settings" data-sidebar-target="#settings">
+                      <i data-feather="settings" class="text-gray-700"></i>
+                  </a>
+              </li> -->
+
+              <app-side-bar-group [user]="user"></app-side-bar-group>
+          </ul>
+
+          <ul class="navbar-nav d-flex align-items-center">
+                  <app-side-bar-group [user]="user" [isIcon]="true"></app-side-bar-group>
+          </ul>
+      </div>
+  </div>
+
+</div>
+

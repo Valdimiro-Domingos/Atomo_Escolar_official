@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+::-webkit-scrollbar{
+  width: 0px;
+}
+.p-password {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+  }
+  .p-inputtext {
+    margin: 0;
+    width: 100%;
+  }
+
+  .p-dropdown {
+    display: inline-flex;
+    cursor: pointer;
+    position: relative;
+    -webkit-user-select: none;
+    user-select: none;
+    width: 100%;
+    border: none;
+}

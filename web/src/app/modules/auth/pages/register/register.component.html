@@ -1,0 +1,52 @@
+<section class="w-full min-h-screen grid grid-cols-1">
+ 
+  <div class="flex justify-center items-center p-8 xl:p-0 ">
+    <div class="max-w-[26rem] w-full flex flex-col">
+      <img class="self-center mx-auto xl:self-start" src="assets/images/shool.png" alt="" srcset="">
+      <form (ngSubmit)="onSubmit()" [formGroup]="formulario" class="shadow-lg  rounded-3xl flex flex-col p-8 gap-2">
+        <h3 class="text-lg font-medium text-start">Registrar-se</h3>
+        <!-- <span class="text-center text-[#556FE6]">Para lorepsum&#64;gmail.com</span> -->
+        <div class="flex flex-col gap-2 mt-3">
+          <div class="flex flex-col gap-1">
+            <input formControlName="designation" class="rounded-3xl placeholder:text-sm outline-none border-[0.5px] py-2 px-4" type="text" placeholder="Nome da empresa">
+            <div class="text-red-500  text-xs ml-3" *ngIf="formulario.get('designation')?.errors  && formulario.get('designation')?.touched">
+              O nome da empresa é obrigatório
+            </div>
+          </div>
+          <div class="flex flex-col gap-1">
+            <input formControlName="nif" class="rounded-3xl placeholder:text-sm outline-none border-[0.5px] py-2 px-4" type="text" placeholder="NIF">
+            <div class="text-red-500 text-xs ml-3" *ngIf="formulario.get('nif')?.errors  && formulario.get('nif')?.touched">
+              O NIF da empresa é obrigatório
+            </div>
+          </div>
+          <div class="flex flex-col gap-1">
+            <input formControlName="name" class="rounded-3xl placeholder:text-sm outline-none border-[0.5px] py-2 px-4" type="text" placeholder="Nome do usuário">
+            <div class="text-red-500  text-xs ml-3" *ngIf="formulario.get('name')?.errors  && formulario.get('name')?.touched">
+              O nome do usuário é obrigatório
+            </div>
+          </div>
+          <div class="flex flex-col gap-1">
+            <input formControlName="email" class="rounded-3xl placeholder:text-sm outline-none border-[0.5px] py-2 px-4" type="email" placeholder="Email">
+            <div class="text-red-500  text-xs ml-3" *ngIf="formulario.get('email')?.errors  && formulario.get('email')?.touched">
+              O Email é obrigatório
+            </div>
+          </div>
+          <div class="flex flex-col gap-1">
+            <input formControlName="telephone" class="rounded-3xl placeholder:text-sm outline-none border-[0.5px] py-2 px-4" type="tel" placeholder="9XX">
+            <div class="text-red-500  text-xs ml-3" *ngIf="formulario.get('telephone')?.errors  && formulario.get('telephone')?.touched">
+              O Telefone é obrigatório
+            </div>
+          </div>
+          <div class="flex flex-col gap-1">
+            <input disabled readonly class="rounded-3xl placeholder:text-sm outline-none border-[0.5px] py-2 px-4" type="text" placeholder="12345678">
+          </div>
+        </div>
+        <button type="submit" class="bg-[#4E73E6] mt-6 rounded-3xl text-white p-3">Inscrever-se</button>
+        <div routerLink="/auth/login" class="flex cursor-pointer items-center gap-1 justify-center text-sm mt-3 ">
+          <img src="assets/images/toLogin.svg" alt="" srcset="">
+          <span class="text-[#5070E5]">Ir para Log In</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

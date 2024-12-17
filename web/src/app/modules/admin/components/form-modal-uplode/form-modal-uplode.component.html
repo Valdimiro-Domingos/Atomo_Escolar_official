@@ -1,0 +1,30 @@
+<div class="w-full flex flex-1 justify-end">
+
+    <ng-container *ngIf="!full">
+      <ng-container *ngIf="!isEdit ; else editButton">
+  
+    <button (click)="handleShow(); click()" style="background: linear-gradient(180deg, #1978E4 0%, #2842b7 100%);" class="px-4 text-white py-2 rounded-lg flex items-center gap-1">
+          Novo
+          <img src="assets/images/add_circle.svg" alt="" srcset="">
+        </button>
+      </ng-container>
+      <ng-template #editButton>
+        <img class="cursor-pointer" (click)="handleShow(); click()"  src="assets/images/edit.svg" alt="" srcset="">
+      </ng-template>
+      </ng-container>
+  
+  
+    <div *ngIf="showModal" class="modal fixed inset-0 w-screen h-screen bg-opacity-50 bg-gray-300  flex items-center justify-center" (click)="handleBackdropClick($event)">
+      <div class="modal-content min-w-[60rem] w-auto min-h-[10rem]  mx-3 z-50 shadow-lg dark:bg-boxdark-2 h-auto border-gray bg-gray-3 dark:text-white rounded-lg">
+        <div class="p-4 bg-gray-3 dark:bg-boxdark-2 rounded-lg shadow-sm" *ngIf="!custom">
+          <div class="flex dark:text-white items-center justify-between">
+            <h2 class="text-xl dark:text-white font-fontBlack">{{ title | uppercase}}</h2>
+            <img src="assets/images/close.svg" class="cursor-pointer" (click)="handleClose()" alt="" srcset="">
+          </div>
+        </div>
+        <ng-content>
+        </ng-content>
+      </div>
+    </div>
+  </div>
+  

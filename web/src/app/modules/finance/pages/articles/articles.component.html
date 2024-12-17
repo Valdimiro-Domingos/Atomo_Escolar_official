@@ -1,0 +1,206 @@
+<app-pre-load *ngIf="isLoading"></app-pre-load>
+
+<div class="content bg-[#F0F2F3] h-screen">
+
+  <app-breadcrumb [icon]="'pi pi-money-bill'" [urlBase]="'Finanças'" [url]="base"></app-breadcrumb>
+  <div class="w-full mb-3 mt-3 flex flex-1 justify-end">
+    <app-form-modal
+      (onClick)="patchValues({designation: '', description: '', price: '', article_type_id: '', article_category_id: '', retention_id: '', tax_id: '' })"
+      [title]="'Adicionar Artigo'">
+      <form (ngSubmit)="onSave()" [formGroup]="formulario" class="py-3 w-[90vw] xl:w-[60vw] px-3 space-y-3">
+        <div class="grid grid-cols-2 gap-2">
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Designação</label>
+            <input id="designation" formControlName="designation" type="text" class="form-control">
+            <div class="text-red-500 mt-1 text-xs"
+              *ngIf="formulario.get('designation')?.errors  && formulario.get('designation')?.touched">
+              O nome é obrigatório
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Descrição</label>
+            <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
+            <div class="text-red-500 mt-1 text-xs"
+              *ngIf="formulario.get('description')?.errors  && formulario.get('description')?.touched">
+              A Descrição é obrigatória
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Preço</label>
+            <input id="price" formControlName="price" type="number" class="form-control">
+            <div class="text-red-500 mt-1 text-xs"
+              *ngIf="formulario.get('price')?.errors  && formulario.get('price')?.touched">
+              O preço é obrigatório
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Taxa</label>
+            <select id="tax_id" formControlName="tax_id" class="form-control">
+              <option value="Selecione a taxa" selected disabled>Selecione a taxa</option>
+              <option *ngFor="let item of taxDatas.taxes" [value]="item.id">{{ item.designation }}</option>
+            </select>
+            <div class="text-red-500 mt-1 text-xs"
+              *ngIf="formulario.get('tax_id')?.errors  && formulario.get('tax_id')?.touched">
+              A taxa é obrigatória
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Categoria do Artigo</label>
+            <select id="article_category_id" formControlName="article_category_id" class="form-control">
+              <option value="Selecione a categoria" selected disabled>Selecione a categoria</option>
+              <option *ngFor="let item of categoryDatas.article_categories" [value]="item.id">{{ item.designation }}
+              </option>
+            </select>
+            <div class="text-red-500 mt-1 text-xs"
+              *ngIf="formulario.get('article_category_id')?.errors  && formulario.get('article_category_id')?.touched">
+              A categoria de artigo é obrigatória
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Tipo de Artigo</label>
+            <select id="article_type_id" formControlName="article_type_id" class="form-control">
+              <option value="Selecione o tipo de artigo" selected disabled>Selecione o tipo de Artigo</option>
+              <option *ngFor="let item of articleDatas.article_types" [value]="item.id">{{ item.designation }}</option>
+            </select>
+            <div class="text-red-500 mt-1 text-xs"
+              *ngIf="formulario.get('article_type_id')?.errors  && formulario.get('article_type_id')?.touched">
+              A Tipo de artigo é obrigatória
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Retenção</label>
+          <select id="retention_id" formControlName="retention_id" class="form-control">
+            <option value="Selecione a retenção" selected disabled>Selecione a Retenção</option>
+            <option *ngFor="let item of retentionDatas.retentions" [value]="item.id">{{ item.designation }}</option>
+          </select>
+          <div class="text-red-500 mt-1 text-xs"
+            *ngIf="formulario.get('retention_id')?.errors  && formulario.get('retention_id')?.touched">
+            A retenção é obrigatória
+          </div>
+        </div>
+        <div class="w-full flex justify-end items-end">
+          <button type="submit" class="p-2 px-4 rounded-[10px]  bg-primary-btn  text-white">Salvar</button>
+        </div>
+      </form>
+    </app-form-modal>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-none rounded-md border">
+        <div class="card-body">
+          <app-table [title]="'Artigos'"
+            [heading]="['id', 'Nome', 'Preço', 'Descrição', 'Tipo de Artigo', 'Categoria do Artigo', 'Retenção', 'Taxa',  'Ação']" [items]="datas.articles">
+            <ng-template let-item #renderItem>
+              <td>{{ datas.articles | findIndex: item }}</td>
+              <td>{{ item.designation }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.description ?? '--' }}</td>
+              <td>{{ item?.article_type.designation ?? '--' }}</td>
+              <td>{{ item?.article_category.designation ?? '--' }}</td>
+              <td>{{ item?.retention.designation ?? '--' }}</td>
+              <td>{{ item?.tax.designation ?? '--' }}</td>
+              <td class="flex items-center gap-1 h-20">
+                <app-form-modal
+                  (onClick)="patchValues({designation: item.designation, description: item.description,  price: item.price, article_type_id: item.article_type_id, article_category_id: item.article_category_id, retention_id: item.retention_id, tax_id: item.tax_id})"
+                  title="Editar Artigo" [isEdit]="true">
+                  <form (ngSubmit)="onUpdate(item)" [formGroup]="formulario"
+                    class="py-3 w-[90vw] xl:w-[60vw] px-3 space-y-3">
+                    <div class="grid grid-cols-2 gap-2">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Nome</label>
+                        <input id="designation" formControlName="designation" type="text" class="form-control">
+                        <div class="text-red-500 mt-1 text-xs"
+                          *ngIf="formulario.get('designation')?.errors  && formulario.get('designation')?.touched">
+                          O nome é obrigatório
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="text-sm text-gray-700 mb-1">Descrição</label>
+                        <textarea id="description" formControlName="description" class="form-control"
+                          rows="3"></textarea>
+                        <div class="text-red-500 mt-1 text-xs"
+                          *ngIf="formulario.get('description')?.errors  && formulario.get('description')?.touched">
+                          A Descrição é obrigatória
+                        </div>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Preço</label>
+                        <input id="price" formControlName="price" type="number" class="form-control">
+                        <div class="text-red-500 mt-1 text-xs"
+                          *ngIf="formulario.get('price')?.errors  && formulario.get('price')?.touched">
+                          O preço é obrigatório
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Taxa</label>
+                        <select id="tax_id" formControlName="tax_id" class="form-control">
+                          <option value="" selected>Selecione a taxa</option>
+                          <option *ngFor="let item of taxDatas.taxes" [value]="item.id">{{ item.designation }}</option>
+                        </select>
+                        <div class="text-red-500 mt-1 text-xs"
+                          *ngIf="formulario.get('tax_id')?.errors  && formulario.get('tax_id')?.touched">
+                          A taxa é obrigatória
+                        </div>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Categoria do Artigo</label>
+                        <select id="article_category_id" formControlName="article_category_id" class="form-control">
+                          <option value="" selected>Selecione a categoria</option>
+                          <option *ngFor="let item of categoryDatas.article_categories" [value]="item.id">{{
+                            item.designation }}</option>
+                        </select>
+                        <div class="text-red-500 mt-1 text-xs"
+                          *ngIf="formulario.get('article_category_id')?.errors  && formulario.get('article_category_id')?.touched">
+                          A categoria de artigo é obrigatória
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Tipo de Artigo</label>
+                        <select id="article_type_id" formControlName="article_type_id" class="form-control">
+                          <option value="" selected>Selecione o tipo de Artigo</option>
+                          <option *ngFor="let item of articleDatas.article_types" [value]="item.id">{{ item.designation
+                            }}</option>
+                        </select>
+                        <div class="text-red-500 mt-1 text-xs"
+                          *ngIf="formulario.get('article_type_id')?.errors  && formulario.get('article_type_id')?.touched">
+                          A Tipo de artigo é obrigatória
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1" class="text-sm text-gray-700 mb-1">Retenção</label>
+                      <select id="retention_id" formControlName="retention_id" class="form-control">
+                        <option value="" selected>Selecione a Retenção</option>
+                        <option *ngFor="let item of retentionDatas.retentions" [value]="item.id">{{ item.designation }}
+                        </option>
+                      </select>
+                      <div class="text-red-500 mt-1 text-xs"
+                        *ngIf="formulario.get('retention_id')?.errors  && formulario.get('retention_id')?.touched">
+                        A retenção é obrigatória
+                      </div>
+                    </div>
+                    <div class="w-full flex justify-end items-end">
+                      <button type="submit" class="p-2 px-4 rounded-[10px]  bg-primary-btn  text-white">Salvar</button>
+                    </div>
+                  </form>
+                </app-form-modal>
+                <app-form-modal-remove (handleRemove)="handleRemove(item.id)" [item]="item" title="Eliminar"
+                  [name]="item.designation"></app-form-modal-remove>
+              </td>
+            </ng-template>
+          </app-table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
